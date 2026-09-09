@@ -16,6 +16,21 @@ function detectarPlataforma(url) {
   return 'otro'
 }
 
+/**
+ * Limpia parámetros de tracking (?utm_source=, ?igsh=, etc.) que Instagram
+ * y TikTok agregan al copiar un link desde la app. Esos parámetros pueden
+ * hacer que el link redirija al feed general en vez del post/reel exacto
+ * cuando se abre sin sesión iniciada. Se conserva solo la ruta limpia.
+ */
+function limpiarUrl(url) {
+  try {
+    const u = new URL(url)
+    return `${u.origin}${u.pathname}`
+  } catch {
+    return url // si no es una URL válida, se guarda tal cual (se validará después)
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { limite } = req.query
@@ -44,13 +59,15 @@ export default async function handler(req, res) {
   if (!auth) return
 
   if (req.method === 'POST') {
-    const { url, titulo, orden } = req.body
+    const { url, titulo, orden, miniatura_url } = req.body
     if (!url) return res.status(400).json({ error: 'Falta la URL del video' })
+
+    const urlLimpia = limpiarUrl(url)
 
     try {
       const [nuevo] = await sql`
-        INSERT INTO videos (url, plataforma, titulo, orden)
-        VALUES (${url}, ${detectarPlataforma(url)}, ${titulo || null}, ${orden || 0})
+        INSERT INTO videos (url, plataforma, titulo, orden, miniatura_url)
+        VALUES (${urlLimpia}, ${detectarPlataforma(urlLimpia)}, ${titulo || null}, ${orden || 0}, ${miniatura_url || null})
         RETURNING *
       `
       return res.status(201).json({ video: nuevo })

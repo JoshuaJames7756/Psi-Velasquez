@@ -7,6 +7,7 @@ function SeccionVideos() {
   const { videos, cargando } = useVideos()
   const [url, setUrl] = useState('')
   const [titulo, setTitulo] = useState('')
+  const [miniaturaUrl, setMiniaturaUrl] = useState('')
   const [guardando, setGuardando] = useState(false)
   const [listaLocal, setListaLocal] = useState(null)
 
@@ -21,13 +22,14 @@ function SeccionVideos() {
       const res = await fetch('/api/videos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ url, titulo }),
+        body: JSON.stringify({ url, titulo, miniatura_url: miniaturaUrl }),
       })
       if (res.ok) {
         const data = await res.json()
         setListaLocal([data.video, ...lista])
         setUrl('')
         setTitulo('')
+        setMiniaturaUrl('')
       }
     } finally {
       setGuardando(false)
@@ -77,6 +79,27 @@ function SeccionVideos() {
             style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
           />
         </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>
+            Imagen de miniatura (opcional)
+          </label>
+          <input
+            type="url"
+            placeholder="https://..."
+            value={miniaturaUrl}
+            onChange={(e) => setMiniaturaUrl(e.target.value)}
+            style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+          />
+          <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-texto-secundario)', marginTop: '0.4rem' }}>
+            Instagram ya no permite tomar la miniatura automáticamente. Si quieres una
+            imagen de portada, toma una captura de pantalla del video, súbela a{' '}
+            <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
+              imgur.com
+            </a>{' '}
+            y pega aquí el link de la imagen. Si lo dejas vacío, se mostrará un color de
+            fondo en su lugar.
+          </p>
+        </div>
         <button type="submit" disabled={guardando} className="btn btn-primario">
           Agregar video
         </button>
@@ -90,6 +113,13 @@ function SeccionVideos() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
         {lista.map((v) => (
           <div key={v.id} style={{ border: '1px solid var(--color-sage-medio)', borderRadius: 'var(--radius-sm)', padding: '0.75rem' }}>
+            {v.miniatura_url && (
+              <img
+                src={v.miniatura_url}
+                alt=""
+                style={{ width: '100%', aspectRatio: '9/16', objectFit: 'cover', borderRadius: 'var(--radius-sm)', marginBottom: '0.5rem' }}
+              />
+            )}
             <p style={{ fontSize: 'var(--fs-small)', fontWeight: 600, textTransform: 'capitalize' }}>{v.plataforma}</p>
             <p style={{ fontSize: 'var(--fs-small)', marginBottom: '0.5rem', wordBreak: 'break-all' }}>{v.titulo || v.url}</p>
             <button
