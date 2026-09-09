@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://REEMPLAZAR-CON-DOMINIO-FINAL.com/sitemap.xml

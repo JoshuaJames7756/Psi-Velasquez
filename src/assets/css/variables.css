@@ -1,0 +1,62 @@
+/* ============================================
+   VARIABLES.CSS — Rebeca Velásquez, Psicóloga Clínica
+   Paleta extraída del Canva del cliente (HEX reales, no aproximados)
+   ============================================ */
+
+:root {
+  /* --- Paleta de marca --- */
+  --color-fondo-crema: #FFFBF5;      /* fondo principal, secciones claras */
+  --color-sage-suave: #C7D1C6;       /* verde salvia — contacto, formación */
+  --color-sage-medio: #DDE4DD;       /* verde salvia claro — aviso ético */
+  --color-arena-hero: #D2D3C7;       /* overlay hero, gris cálido */
+  --color-terracota-suave: #E7D3C3;  /* acento cálido — servicios */
+  --color-blanco: #FFFFFF;
+
+  /* --- Texto --- */
+  --color-texto-principal: #323232;  /* títulos, texto de alto contraste */
+  --color-texto-secundario: #4E4B48; /* párrafos de apoyo */
+  --color-texto-sobre-oscuro: #FFFBF5;
+
+  /* --- CTA (propuesta, pendiente confirmación de logo con acento) --- */
+  --color-cta: #8FA688;
+  --color-cta-hover: #75907A;
+  --color-cta-texto: #FFFFFF;
+
+  /* --- Estados --- */
+  --color-exito: #7FA37A;
+  --color-error: #C97B63;
+  --color-advertencia: #D9B36C;
+
+  /* --- Tipografía --- */
+  --font-serif-titulos: 'Cormorant Garamond', Georgia, serif;
+  --font-sans-cuerpo: 'Poppins', -apple-system, sans-serif;
+
+  --fs-hero: clamp(2.25rem, 5vw, 4rem);
+  --fs-h1: clamp(1.9rem, 3.5vw, 2.75rem);
+  --fs-h2: clamp(1.5rem, 2.5vw, 2rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  /* --- Espaciado --- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+
+  /* --- Radios y sombras (calidez, no corporativo duro) --- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --shadow-suave: 0 4px 20px rgba(50, 50, 50, 0.06);
+  --shadow-media: 0 8px 30px rgba(50, 50, 50, 0.1);
+
+  /* --- Transiciones (microinteracciones suaves) --- */
+  --transition-suave: all 0.35s ease;
+  --transition-rapida: all 0.2s ease;
+
+  /* --- Layout --- */
+  --max-width-contenido: 1200px;
+  --header-height: 80px;
+}
