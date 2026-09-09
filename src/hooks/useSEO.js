@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-const DOMINIO = 'https://REEMPLAZAR-CON-DOMINIO-FINAL.com' // TODO: actualizar al comprar el dominio
+// ⚠️ CAMBIAR ESTA LÍNEA cuando se compre el dominio final (DNS-only swap).
+// Es el único lugar en useSEO.js que necesita actualizarse.
+const DOMINIO = 'https://psi-velasquez.vercel.app'
 
 function setMeta(nombre, contenido, esProperty = false) {
   if (!contenido) return
