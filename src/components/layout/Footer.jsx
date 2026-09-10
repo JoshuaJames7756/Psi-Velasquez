@@ -24,9 +24,14 @@ function Footer() {
             <Icono nombre="email" size={18} style={{ flexShrink: 0, marginTop: 2 }} />
             <span>{contacto.direccion}, {contacto.ciudad}</span>
           </p>
-          <p style={{ color: '#C9C6C1', display: 'flex', gap: '0.6rem' }}>
-            <Icono nombre="whatsapp" size={18} style={{ flexShrink: 0, marginTop: 2 }} />
-            <span>{contacto.celular}</span>
+          <p style={{ display: 'flex', gap: '0.6rem', marginBottom: '0.6rem' }}>
+            <Icono nombre="whatsapp" size={18} style={{ flexShrink: 0, marginTop: 2, color: '#C9C6C1' }} />
+            <a href={`tel:+591${contacto.celular}`} style={{ color: '#C9C6C1' }}>
+              {contacto.celular}
+            </a>
+          </p>
+          <p style={{ color: '#C9C6C1', fontSize: 'var(--fs-small)', marginTop: '1rem' }}>
+            {contacto.horario || 'Horario de atención: por confirmar'}
           </p>
         </div>
 
