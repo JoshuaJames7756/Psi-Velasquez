@@ -1,47 +1,46 @@
 // ============================================
-// email.js — Envío de notificaciones vía EmailJS (REST API)
-// Se usa desde funciones serverless (/api), NUNCA desde el frontend
-// directamente, para no exponer las credenciales de plantilla.
+// email.js — Envío de notificaciones vía Resend
+// Se usa desde funciones serverless (/api). Requiere solo RESEND_API_KEY.
 //
-// EmailJS normalmente se usa client-side, pero aquí lo llamamos server-side
-// vía su REST API (https://api.emailjs.com/api/v1.0/email/send) para poder
-// disparar el correo de forma confiable justo después de escribir en Neon,
-// sin depender de que el navegador del paciente siga abierto.
+// Nota sobre el remitente: mientras no se verifique un dominio propio en
+// Resend, se debe usar el dominio de prueba onboarding@resend.dev (ya
+// configurado abajo). Verificar un dominio propio es opcional y se puede
+// hacer más adelante sin cambiar el resto del código — solo la constante
+// REMITENTE.
 // ============================================
+import { Resend } from 'resend'
 
-const EMAILJS_ENDPOINT = 'https://api.emailjs.com/api/v1.0/email/send'
+const resend = new Resend(process.env.RESEND_API_KEY)
 
-async function enviarEmail(templateId, templateParams) {
-  const { VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_PUBLIC_KEY, EMAILJS_PRIVATE_KEY } = process.env
+const REMITENTE = 'Rebeca Velásquez <onboarding@resend.dev>'
 
-  if (!VITE_EMAILJS_SERVICE_ID || !VITE_EMAILJS_PUBLIC_KEY) {
-    console.warn('EmailJS no está configurado (faltan variables de entorno). Se omite el envío.')
+// --- Estilos compartidos, coherentes con la paleta de marca ---
+const wrapperEmail = (contenido) => `
+  <div style="font-family: -apple-system, sans-serif; background: #FFFBF5; padding: 2rem; color: #323232;">
+    <div style="max-width: 480px; margin: 0 auto; background: #FFFFFF; border-radius: 16px; padding: 2rem; border: 1px solid #DDE4DD;">
+      ${contenido}
+      <p style="margin-top: 2rem; font-size: 13px; color: #4E4B48;">Rebeca Velásquez · Psicóloga Clínica · Cochabamba, Bolivia</p>
+    </div>
+  </div>
+`
+
+async function enviarEmail({ to, subject, html }) {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('Resend no está configurado (falta RESEND_API_KEY). Se omite el envío.')
     return { skipped: true }
   }
 
   try {
-    const res = await fetch(EMAILJS_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id: VITE_EMAILJS_SERVICE_ID,
-        template_id: templateId,
-        user_id: VITE_EMAILJS_PUBLIC_KEY,
-        accessToken: EMAILJS_PRIVATE_KEY, // recomendado por EmailJS para uso server-side
-        template_params: templateParams,
-      }),
-    })
-
-    if (!res.ok) {
-      const texto = await res.text()
-      console.error('EmailJS respondió con error:', res.status, texto)
+    const { error } = await resend.emails.send({ from: REMITENTE, to, subject, html })
+    if (error) {
+      console.error('Resend respondió con error:', error)
       return { ok: false }
     }
     return { ok: true }
   } catch (err) {
     // El envío de email nunca debe tumbar el flujo principal (crear/confirmar
     // una cita). Se registra el error y se continúa.
-    console.error('Error al enviar email vía EmailJS:', err)
+    console.error('Error al enviar email vía Resend:', err)
     return { ok: false, error: err }
   }
 }
@@ -51,11 +50,16 @@ async function enviarEmail(templateId, templateParams) {
  */
 export function notificarSolicitudRecibida({ email, nombre_paciente, fecha, hora }) {
   if (!email) return Promise.resolve({ skipped: true }) // el email es opcional en el form
-  return enviarEmail(process.env.VITE_EMAILJS_TEMPLATE_SOLICITUD, {
-    to_email: email,
-    nombre_paciente,
-    fecha,
-    hora,
+
+  return enviarEmail({
+    to: email,
+    subject: 'Recibimos tu solicitud de cita',
+    html: wrapperEmail(`
+      <h2 style="font-family: Georgia, serif; color: #323232;">Solicitud recibida</h2>
+      <p>Hola ${nombre_paciente},</p>
+      <p>Recibimos tu solicitud de cita para el <strong>${fecha}</strong> a las <strong>${hora}</strong>.</p>
+      <p>Rebeca la revisará personalmente y te confirmaremos por este medio en las próximas horas.</p>
+    `),
   })
 }
 
@@ -65,12 +69,16 @@ export function notificarSolicitudRecibida({ email, nombre_paciente, fecha, hora
 export function notificarNuevaSolicitudAdmin({ nombre_paciente, fecha, hora, motivo }) {
   const emailAdmin = process.env.ADMIN_NOTIFICATION_EMAIL
   if (!emailAdmin) return Promise.resolve({ skipped: true })
-  return enviarEmail(process.env.VITE_EMAILJS_TEMPLATE_ADMIN, {
-    to_email: emailAdmin,
-    nombre_paciente,
-    fecha,
-    hora,
-    motivo,
+
+  return enviarEmail({
+    to: emailAdmin,
+    subject: 'Nueva solicitud de cita',
+    html: wrapperEmail(`
+      <h2 style="font-family: Georgia, serif; color: #323232;">Nueva solicitud pendiente</h2>
+      <p><strong>${nombre_paciente}</strong> solicitó una cita para el <strong>${fecha}</strong> a las <strong>${hora}</strong>.</p>
+      <p>Motivo: ${motivo || 'No especificado'}</p>
+      <p>Revísala desde tu panel de administración para confirmar o reagendar.</p>
+    `),
   })
 }
 
@@ -79,12 +87,21 @@ export function notificarNuevaSolicitudAdmin({ nombre_paciente, fecha, hora, mot
  */
 export function notificarCambioEstado({ email, nombre_paciente, fecha, hora, estado, nota_admin }) {
   if (!email) return Promise.resolve({ skipped: true })
-  return enviarEmail(process.env.VITE_EMAILJS_TEMPLATE_ESTADO, {
-    to_email: email,
-    nombre_paciente,
-    fecha,
-    hora,
-    estado, // 'confirmada' | 'cancelada'
-    nota_admin: nota_admin || '',
+
+  const esConfirmada = estado === 'confirmada'
+
+  return enviarEmail({
+    to: email,
+    subject: esConfirmada ? 'Tu cita fue confirmada' : 'Actualización sobre tu cita',
+    html: wrapperEmail(`
+      <h2 style="font-family: Georgia, serif; color: #323232;">
+        ${esConfirmada ? 'Cita confirmada' : 'Cambio en tu cita'}
+      </h2>
+      <p>Hola ${nombre_paciente},</p>
+      <p>Tu cita del <strong>${fecha}</strong> a las <strong>${hora}</strong> fue
+        <strong>${esConfirmada ? 'confirmada' : 'cancelada'}</strong>.
+      </p>
+      ${nota_admin ? `<p style="background:#DDE4DD; padding:0.75rem 1rem; border-radius:8px;">${nota_admin}</p>` : ''}
+    `),
   })
 }

@@ -25,7 +25,6 @@ CREATE TABLE citas (
   respuestas_formulario JSONB,      -- respuestas del formulario de admisión (flexible, ver tabla preguntas_formulario)
   nota_admin VARCHAR(500),          -- nota opcional de Rebeca al confirmar/reagendar (ej. proponer otro horario)
   email_enviado BOOLEAN DEFAULT false,
-  whatsapp_enviado BOOLEAN DEFAULT false,  -- reservado para Fase 2 (WhatsApp API)
   creado_en TIMESTAMP DEFAULT NOW()
 );
 
