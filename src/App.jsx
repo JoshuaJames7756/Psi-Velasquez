@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import ScrollToTop from './components/ui/ScrollToTop'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Inicio from './pages/Inicio'
@@ -14,6 +15,7 @@ import NotFound from './pages/NotFound'
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Header />
       <main>
         <Routes>
