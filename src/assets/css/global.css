@@ -55,27 +55,31 @@ button {
   background: none;
 }
 
-/* --- CONTENEDORES Y LAYOUT --- */
+/* --- CONTENEDORES Y ESPACIADO GLOBAL --- */
 .contenedor {
   max-width: var(--max-width-contenido);
   margin: 0 auto;
   padding: 0 var(--space-md);
 }
 
+/* Secciones con margen amplio y compensación de header sticky */
+section,
 .seccion {
-  padding: var(--space-xl) 0;
+  padding: 5rem 0;
   position: relative;
+  scroll-margin-top: calc(var(--header-height, 70px) + 1.5rem);
 }
 
 .seccion-hero {
-  padding-top: var(--space-lg);
+  padding-top: calc(var(--space-lg) + 1.5rem);
+  padding-bottom: 4rem;
 }
 
 .hero-grid,
 .grid-2-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
+  gap: 3.5rem;
   align-items: center;
 }
 
@@ -84,7 +88,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 251, 245, 0.85);
+  background: rgba(255, 251, 245, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(143, 166, 136, 0.18);
@@ -333,7 +337,17 @@ button {
 }
 
 @media (max-width: 768px) {
-  /* Forzar 1 sola columna ordenada en pantallas móviles */
+  section,
+  .seccion {
+    padding: 3.5rem 0 !important;
+    scroll-margin-top: calc(var(--header-height, 65px) + 1rem);
+  }
+
+  .seccion-hero {
+    padding-top: 2rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
   .hero-grid,
   .grid-2-col {
     grid-template-columns: 1fr !important;
@@ -345,7 +359,6 @@ button {
     gap: 1.25rem !important;
   }
 
-  /* Ajustar tarjetas para móvil */
   .card-especialidad {
     padding: 1.5rem 1.25rem !important;
     min-height: auto !important;
@@ -359,7 +372,6 @@ button {
     padding: 0 1.25rem;
   }
 
-  /* Toggle navegación móvil */
   .nav-desktop {
     display: none !important;
   }
