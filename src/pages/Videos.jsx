@@ -26,7 +26,7 @@ function Videos() {
         </p>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 220px))', justifyContent: 'center', gap: '1.5rem' }}>
         {videos.map((v) => (
           <VideoCard key={v.id} video={v} onPlay={setVideoActivo} />
         ))}

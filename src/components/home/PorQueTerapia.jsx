@@ -7,7 +7,7 @@ function PorQueTerapia() {
     <section style={{ background: 'var(--color-sage-medio)' }}>
       <FadeInSection
         as="div"
-        className="contenedor seccion"
+        className="contenedor seccion grid-2-col"
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',

@@ -26,7 +26,8 @@ function VideosPreview() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 220px))',
+              justifyContent: 'center',
               gap: '1.5rem',
             }}
           >

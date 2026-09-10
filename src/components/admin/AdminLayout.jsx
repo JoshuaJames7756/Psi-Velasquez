@@ -9,12 +9,12 @@ const secciones = [
 
 function AdminLayout({ children }) {
   return (
-    <div className="contenedor seccion" style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '2rem' }}>
-      <nav>
+    <div className="contenedor seccion admin-layout" style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '2rem' }}>
+      <nav className="admin-nav">
         <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-texto-secundario)', marginBottom: '0.75rem' }}>
           PANEL DE REBECA
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div className="admin-nav-links" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {secciones.map((s) => (
             <NavLink
               key={s.to}
@@ -25,6 +25,7 @@ function AdminLayout({ children }) {
                 borderRadius: 'var(--radius-sm)',
                 background: isActive ? 'var(--color-cta)' : 'transparent',
                 color: isActive ? 'var(--color-cta-texto)' : 'var(--color-texto-principal)',
+                whiteSpace: 'nowrap',
               })}
             >
               {s.label}
@@ -32,7 +33,7 @@ function AdminLayout({ children }) {
           ))}
         </div>
       </nav>
-      <div>{children}</div>
+      <div style={{ minWidth: 0 }}>{children}</div>
     </div>
   )
 }

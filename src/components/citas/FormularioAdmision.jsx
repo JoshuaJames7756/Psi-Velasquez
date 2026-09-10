@@ -120,7 +120,7 @@ function FormularioAdmision({ onSubmit, enviando }) {
         />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="grid-2-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
         <div style={{ marginBottom: '1.25rem' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem' }}>
             Teléfono / WhatsApp <span style={{ color: 'var(--color-error)' }}>*</span>

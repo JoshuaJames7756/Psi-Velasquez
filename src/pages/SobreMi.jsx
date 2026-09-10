@@ -11,7 +11,7 @@ function SobreMi() {
     <div>
       {/* Hero personal */}
       <section
-        className="contenedor seccion"
+        className="contenedor seccion grid-2-col"
         style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 'var(--space-lg)', alignItems: 'center' }}
         id="sobre-mi-hero"
       >

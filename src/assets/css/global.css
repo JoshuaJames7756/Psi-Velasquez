@@ -145,8 +145,20 @@ button {
   color: var(--color-cta-texto) !important;
 }
 
+.grid-footer {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.grid-footer a:hover {
+  color: var(--color-fondo-crema) !important;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
-  .hero-grid {
+  .hero-grid,
+  .grid-2-col {
     grid-template-columns: 1fr !important;
   }
 
@@ -157,4 +169,42 @@ button {
   .nav-mobile-toggle {
     display: flex;
   }
+
+  /* Panel admin: nav lateral fija de 220px rompe en mobile.
+     Se colapsa a una barra horizontal con scroll arriba del contenido. */
+  .admin-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-nav-links {
+    flex-direction: row !important;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .grid-footer {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .contenedor {
+    padding: 0 var(--space-sm) !important;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .grid-footer {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* Evita overflow horizontal general: cualquier elemento (imagen, iframe,
+   texto largo sin espacios) que se pase del ancho de su contenedor se
+   ajusta en vez de forzar scroll horizontal de toda la página. */
+img, iframe, video {
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
 }
