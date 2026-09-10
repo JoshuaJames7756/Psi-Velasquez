@@ -4,16 +4,7 @@ import ImagenPlaceholder from '../ui/ImagenPlaceholder'
 
 function Hero() {
   return (
-    <section
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 'var(--space-lg)',
-        alignItems: 'center',
-        paddingTop: 'var(--space-lg)',
-      }}
-      className="hero-grid"
-    >
+    <section className="hero-grid seccion-hero">
       <div>
         <h1 style={{ fontSize: 'var(--fs-hero)' }}>{perfil.nombre}</h1>
         <h2 style={{ color: 'var(--color-texto-secundario)', fontWeight: 400, marginTop: '0.25rem' }}>
@@ -27,8 +18,8 @@ function Hero() {
       <ImagenPlaceholder
         ratio="4/5"
         src={imagenesTemporales.heroRetrato}
-        alt="Retrato profesional — foto temporal, será reemplazada"
-        label="Foto profesional de Rebeca — pendiente"
+        alt="Retrato profesional"
+        label="Foto profesional de Rebeca"
       />
     </section>
   )
