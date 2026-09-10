@@ -1,49 +1,81 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { perfil } from '../../data/contenido'
+import Icono from '../ui/Icono'
 
-export default function Header() {
+const enlaces = [
+  { to: '/', label: 'Inicio' },
+  { to: '/sobre-mi', label: 'Sobre mí' },
+  { to: '/especialidades', label: 'Especialidades' },
+  { to: '/videos', label: 'Videos' },
+  { to: '/contacto', label: 'Contacto' },
+]
+
+function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false)
-
-  const toggleMenu = () => setMenuAbierto(!menuAbierto)
-  const cerrarMenu = () => setMenuAbierto(false)
+  const location = useLocation()
 
   return (
     <header className="site-header">
       <div className="contenedor header-wrapper">
-        <Link to="/" className="brand-logo" onClick={cerrarMenu}>
+        {/* Brand / Logo */}
+        <Link to="/" className="brand-logo">
           {perfil.nombre}
         </Link>
 
-        {/* Navegación Desktop */}
+        {/* Nav desktop pill */}
         <nav className="nav-desktop">
-          <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Inicio</NavLink>
-          <NavLink to="/sobre-mi" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Sobre mí</NavLink>
-          <NavLink to="/especialidades" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Especialidades</NavLink>
-          <NavLink to="/videos" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Videos</NavLink>
-          <NavLink to="/contacto" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contacto</NavLink>
+          {enlaces.map((e) => {
+            const isActive = location.pathname === e.to
+            return (
+              <Link 
+                key={e.to} 
+                to={e.to} 
+                className={`nav-link ${isActive ? 'active' : ''}`}
+              >
+                {e.label}
+              </Link>
+            )
+          })}
         </nav>
 
-        {/* Botón Hamburguesa / X con texto simple y claro para evitar fallos de iconos */}
-        <button 
-          className="nav-mobile-toggle" 
-          onClick={toggleMenu}
-          aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+        {/* Botón CTA desktop */}
+        <div className="nav-desktop">
+          <Link to="/reservar-cita" className="btn btn-primario btn-nav">
+            Reservar Cita
+          </Link>
+        </div>
+
+        {/* Botón hamburguesa mobile (SIN style inline de display) */}
+        <button
+          className="nav-mobile-toggle"
+          onClick={() => setMenuAbierto(!menuAbierto)}
+          aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
         >
-          {menuAbierto ? '✕' : '☰'}
+          <Icono nombre={menuAbierto ? 'cerrar' : 'menu'} size={24} />
         </button>
       </div>
 
-      {/* Menú Móvil Desplegable */}
+      {/* Menú desplegable mobile */}
       {menuAbierto && (
         <div className="mobile-menu-overlay">
-          <nav className="mobile-menu-content contenedor">
-            <NavLink to="/" className="mobile-link" onClick={cerrarMenu}>Inicio</NavLink>
-            <NavLink to="/sobre-mi" className="mobile-link" onClick={cerrarMenu}>Sobre mí</NavLink>
-            <NavLink to="/especialidades" className="mobile-link" onClick={cerrarMenu}>Especialidades</NavLink>
-            <NavLink to="/videos" className="mobile-link" onClick={cerrarMenu}>Videos</NavLink>
-            <NavLink to="/contacto" className="mobile-link" onClick={cerrarMenu}>Contacto</NavLink>
-            <Link to="/reservar-cita" className="btn btn-primario" style={{ marginTop: '0.5rem' }} onClick={cerrarMenu}>
+          <nav className="contenedor mobile-menu-content">
+            {enlaces.map((e) => (
+              <Link 
+                key={e.to} 
+                to={e.to} 
+                className="mobile-link"
+                onClick={() => setMenuAbierto(false)}
+              >
+                {e.label}
+              </Link>
+            ))}
+            <Link 
+              to="/reservar-cita" 
+              className="btn btn-primario" 
+              onClick={() => setMenuAbierto(false)}
+              style={{ marginTop: '0.5rem', textAlign: 'center' }}
+            >
               Reservar Cita
             </Link>
           </nav>
@@ -52,3 +84,5 @@ export default function Header() {
     </header>
   )
 }
+
+export default Header
