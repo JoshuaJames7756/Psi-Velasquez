@@ -15,15 +15,18 @@ body {
   font-size: var(--fs-body);
   color: var(--color-texto-principal);
   background-color: var(--color-fondo-crema);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
+/* --- Tipografía elegante y títulos --- */
 h1, h2, h3, h4 {
   font-family: var(--font-serif-titulos);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.18;
   color: var(--color-texto-principal);
+  letter-spacing: -0.01em;
 }
 
 h1 { font-size: var(--fs-h1); }
@@ -51,6 +54,7 @@ button {
   background: none;
 }
 
+/* --- Layout Contenedores --- */
 .contenedor {
   max-width: var(--max-width-contenido);
   margin: 0 auto;
@@ -59,27 +63,59 @@ button {
 
 .seccion {
   padding: var(--space-xl) 0;
+  position: relative;
 }
 
-/* --- CTA base --- */
+/* --- Badges orgánicos estilo UI moderna --- */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-badge-bg);
+  color: var(--color-badge-texto);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(143, 166, 136, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-cta);
+  box-shadow: 0 0 8px var(--color-cta);
+}
+
+/* --- Botones / CTA --- */
 .btn {
-  display: inline-block;
-  padding: 0.9rem 2rem;
-  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2.2rem;
+  border-radius: var(--radius-full);
   font-size: var(--fs-body);
   font-weight: 500;
   transition: var(--transition-suave);
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
 }
 
 .btn-primario {
   background-color: var(--color-cta);
   color: var(--color-cta-texto);
+  box-shadow: 0 10px 25px -5px rgba(143, 166, 136, 0.4);
 }
 
 .btn-primario:hover {
   background-color: var(--color-cta-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-media);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .btn-outline {
@@ -91,16 +127,108 @@ button {
 .btn-outline:hover {
   background-color: var(--color-texto-principal);
   color: var(--color-fondo-crema);
+  transform: translateY(-2px);
 }
 
-/* --- Fade-in al hacer scroll (microinteracción) ---
-   Easing tipo "ease-out-expo" en vez de ease lineal: arranca rápido y
-   desacelera con más carácter, la curva que suelen usar sitios de diseño
-   cuidado en vez del fade genérico plano. */
+/* --- Tarjetas Glassmorphism Premium --- */
+.card-especialidad {
+  background: var(--color-card-bg) !important;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-md) !important;
+  padding: 2.2rem 1.8rem !important;
+  box-shadow: var(--shadow-suave);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: var(--transition-suave);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-especialidad::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-cta), var(--color-sage-suave));
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-expo);
+}
+
+.card-especialidad:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(143, 166, 136, 0.5);
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+.card-especialidad:hover::before {
+  opacity: 1;
+}
+
+/* --- Grid de Especialidades --- */
+.grid-especialidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  align-items: stretch;
+}
+
+/* --- Efectos de Glow de Fondo --- */
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gradient-glow);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Video Card --- */
+.video-card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-suave);
+  transition: var(--transition-suave);
+  border: 1px solid var(--color-card-border);
+}
+
+.video-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.video-card:hover .video-card-play {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* --- Canales de Contacto --- */
+.canal-contacto {
+  box-shadow: var(--shadow-suave);
+  border: 1px solid var(--color-card-border);
+}
+
+.canal-contacto:hover {
+  background-color: var(--color-cta) !important;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.canal-contacto:hover svg {
+  color: var(--color-cta-texto) !important;
+}
+
+/* --- Animaciones Stagger (Secuenciales) --- */
 .fade-in {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo);
+  will-change: opacity, transform;
 }
 
 .fade-in.visible {
@@ -108,58 +236,34 @@ button {
   transform: translateY(0);
 }
 
-/* --- Accesibilidad: respeta preferencia de movimiento reducido --- */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+.delay-1 { transition-delay: 0.12s; }
+.delay-2 { transition-delay: 0.24s; }
+.delay-3 { transition-delay: 0.36s; }
+.delay-4 { transition-delay: 0.48s; }
+.delay-5 { transition-delay: 0.60s; }
 
-/* --- Nav responsive --- */
-.nav-mobile-toggle {
-  display: none;
-}
-
-.card-especialidad:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-media);
-}
-
-.video-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: var(--shadow-media);
-}
-
-.video-card:hover .video-card-play {
-  transform: translate(-50%, -50%) scale(1.12);
-}
-
-.canal-contacto:hover {
-  background-color: var(--color-cta) !important;
-  transform: translateY(-3px);
-}
-
-.canal-contacto:hover svg {
-  color: var(--color-cta-texto) !important;
-}
-
+/* --- Footer --- */
 .grid-footer {
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr 1fr;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .grid-footer a:hover {
-  color: var(--color-fondo-crema) !important;
+  color: var(--color-cta) !important;
   text-decoration: underline;
+}
+
+/* --- Adaptabilidad Responsive --- */
+.nav-mobile-toggle {
+  display: none;
 }
 
 @media (max-width: 768px) {
   .hero-grid,
   .grid-2-col {
     grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
   }
 
   .nav-desktop {
@@ -170,8 +274,6 @@ button {
     display: flex;
   }
 
-  /* Panel admin: nav lateral fija de 220px rompe en mobile.
-     Se colapsa a una barra horizontal con scroll arriba del contenido. */
   .admin-layout {
     grid-template-columns: 1fr !important;
   }
@@ -198,13 +300,7 @@ button {
   }
 }
 
-/* Evita overflow horizontal general: cualquier elemento (imagen, iframe,
-   texto largo sin espacios) que se pase del ancho de su contenedor se
-   ajusta en vez de forzar scroll horizontal de toda la página. */
+/* Evita desbordamiento horizontal global */
 img, iframe, video {
   max-width: 100%;
-}
-
-body {
-  overflow-x: hidden;
 }

@@ -1,25 +1,32 @@
 /* ============================================
    VARIABLES.CSS — Rebeca Velásquez, Psicóloga Clínica
-   Paleta extraída del Canva del cliente (HEX reales, no aproximados)
+   Paleta de marca refinada + Sistema visual Premium
    ============================================ */
 
 :root {
-  /* --- Paleta de marca --- */
-  --color-fondo-crema: #FFFBF5;      /* fondo principal, secciones claras */
-  --color-sage-suave: #C7D1C6;       /* verde salvia — contacto, formación */
-  --color-sage-medio: #DDE4DD;       /* verde salvia claro — aviso ético */
-  --color-arena-hero: #D2D3C7;       /* overlay hero, gris cálido */
-  --color-terracota-suave: #E7D3C3;  /* acento cálido — servicios */
+  /* --- Paleta de marca base --- */
+  --color-fondo-crema: #FFFBF5;
+  --color-sage-suave: #C7D1C6;
+  --color-sage-medio: #DDE4DD;
+  --color-arena-hero: #D2D3C7;
+  --color-terracota-suave: #E7D3C3;
   --color-blanco: #FFFFFF;
 
+  /* --- Modificadores de acento y gradientes --- */
+  --color-card-bg: rgba(255, 255, 255, 0.85);
+  --color-card-border: rgba(143, 166, 136, 0.22);
+  --color-badge-bg: rgba(143, 166, 136, 0.12);
+  --color-badge-texto: #4A6345;
+  --gradient-glow: radial-gradient(circle at 50% 50%, rgba(199, 209, 198, 0.35) 0%, rgba(255, 251, 245, 0) 70%);
+
   /* --- Texto --- */
-  --color-texto-principal: #323232;  /* títulos, texto de alto contraste */
-  --color-texto-secundario: #4E4B48; /* párrafos de apoyo */
+  --color-texto-principal: #2B2A29;
+  --color-texto-secundario: #54514D;
   --color-texto-sobre-oscuro: #FFFBF5;
 
-  /* --- CTA (propuesta, pendiente confirmación de logo con acento) --- */
+  /* --- CTA --- */
   --color-cta: #8FA688;
-  --color-cta-hover: #75907A;
+  --color-cta-hover: #738C6C;
   --color-cta-texto: #FFFFFF;
 
   /* --- Estados --- */
@@ -31,10 +38,10 @@
   --font-serif-titulos: 'Cormorant Garamond', Georgia, serif;
   --font-sans-cuerpo: 'Poppins', -apple-system, sans-serif;
 
-  --fs-hero: clamp(2.25rem, 5vw, 4rem);
-  --fs-h1: clamp(1.9rem, 3.5vw, 2.75rem);
-  --fs-h2: clamp(1.5rem, 2.5vw, 2rem);
-  --fs-h3: 1.25rem;
+  --fs-hero: clamp(2.5rem, 5.5vw, 4.25rem);
+  --fs-h1: clamp(2rem, 3.8vw, 3rem);
+  --fs-h2: clamp(1.6rem, 2.8vw, 2.25rem);
+  --fs-h3: 1.3rem;
   --fs-body: 1rem;
   --fs-small: 0.875rem;
 
@@ -45,16 +52,21 @@
   --space-lg: 4rem;
   --space-xl: 6rem;
 
-  /* --- Radios y sombras (calidez, no corporativo duro) --- */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --shadow-suave: 0 4px 20px rgba(50, 50, 50, 0.06);
-  --shadow-media: 0 8px 30px rgba(50, 50, 50, 0.1);
+  /* --- Radios y sombras de alta profundidad --- */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-full: 9999px;
 
-  /* --- Transiciones (microinteracciones suaves) --- */
-  --transition-suave: all 0.35s ease;
-  --transition-rapida: all 0.2s ease;
+  --shadow-suave: 0 10px 30px -10px rgba(43, 42, 41, 0.05);
+  --shadow-media: 0 18px 40px -12px rgba(43, 42, 41, 0.09);
+  --shadow-card-hover: 0 25px 50px -12px rgba(115, 140, 108, 0.22);
+  --shadow-glow: 0 0 60px 10px rgba(143, 166, 136, 0.2);
+
+  /* --- Curva de transición estilo Apple/Framer --- */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-suave: all 0.4s var(--ease-expo);
+  --transition-rapida: all 0.2s var(--ease-expo);
 
   /* --- Layout --- */
   --max-width-contenido: 1200px;
