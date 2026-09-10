@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { perfil } from '../../data/contenido'
-import Icono from '../ui/Icono'
 
 export default function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false)
@@ -25,17 +24,17 @@ export default function Header() {
           <NavLink to="/contacto" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contacto</NavLink>
         </nav>
 
-        {/* Botón Hamburgesa */}
+        {/* Botón Hamburguesa / X con texto simple y claro para evitar fallos de iconos */}
         <button 
           className="nav-mobile-toggle" 
           onClick={toggleMenu}
           aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
         >
-          <Icono nombre={menuAbierto ? "close" : "menu"} size={24} />
+          {menuAbierto ? '✕' : '☰'}
         </button>
       </div>
 
-      {/* Menú Flotante Móvil */}
+      {/* Menú Móvil Desplegable */}
       {menuAbierto && (
         <div className="mobile-menu-overlay">
           <nav className="mobile-menu-content contenedor">
@@ -44,7 +43,7 @@ export default function Header() {
             <NavLink to="/especialidades" className="mobile-link" onClick={cerrarMenu}>Especialidades</NavLink>
             <NavLink to="/videos" className="mobile-link" onClick={cerrarMenu}>Videos</NavLink>
             <NavLink to="/contacto" className="mobile-link" onClick={cerrarMenu}>Contacto</NavLink>
-            <Link to="/reservar-cita" className="btn btn-primario mobile-btn" onClick={cerrarMenu}>
+            <Link to="/reservar-cita" className="btn btn-primario" style={{ marginTop: '0.5rem' }} onClick={cerrarMenu}>
               Reservar Cita
             </Link>
           </nav>
