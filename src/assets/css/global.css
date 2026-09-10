@@ -1,5 +1,6 @@
 @import './variables.css';
 
+/* --- RESET & BASES --- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -20,7 +21,7 @@ body {
   overflow-x: hidden;
 }
 
-/* --- Tipografía --- */
+/* --- TIPOGRAFÍA --- */
 h1, h2, h3, h4 {
   font-family: var(--font-serif-titulos);
   font-weight: 500;
@@ -54,7 +55,7 @@ button {
   background: none;
 }
 
-/* --- Layout Contenedores --- */
+/* --- CONTENEDORES Y LAYOUT --- */
 .contenedor {
   max-width: var(--max-width-contenido);
   margin: 0 auto;
@@ -66,12 +67,12 @@ button {
   position: relative;
 }
 
-/* --- HEADER PREMIUM & GLASSMORPHISM --- */
+/* --- HEADER GLASSMORPHISM --- */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 251, 245, 0.82);
+  background: rgba(255, 251, 245, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(143, 166, 136, 0.18);
@@ -97,7 +98,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
   padding: 0.35rem 0.6rem;
   border-radius: var(--radius-full);
   border: 1px solid rgba(143, 166, 136, 0.15);
@@ -119,7 +120,7 @@ button {
 
 .nav-link.active {
   color: var(--color-texto-principal);
-  background: var(--color-blanco);
+  background: #ffffff;
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
@@ -129,7 +130,7 @@ button {
   font-size: 0.9rem;
 }
 
-/* Toggle Mobile Controls */
+/* Hamburguesa Mobile */
 .nav-mobile-toggle {
   display: none;
   align-items: center;
@@ -206,36 +207,42 @@ button {
   color: var(--color-fondo-crema);
 }
 
-/* --- GRID PROPORCIONADO Y EQUILIBRADO (3x2 en Desktop) --- */
+/* --- CUADRÍCULA DE ESPECIALIDADES (3 COLUMNAS SIMÉTRICAS) --- */
 .grid-especialidades {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Forzado simétrico 3x2 */
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  margin-top: 3rem;
   width: 100%;
+  margin-top: 2.5rem;
 }
 
-/* --- TARJETAS DE ESPECIALIDAD CON DISEÑO ELEGANTE Y ALTURA UNIFORME --- */
+.card-especialidad-wrapper {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
 .card-especialidad {
-  background: rgba(255, 255, 255, 0.82) !important;
+  background: #ffffff !important;
   border: 1px solid rgba(143, 166, 136, 0.22);
   border-radius: 18px !important;
-  padding: 2.25rem 2rem !important;
-  min-height: 230px; /* Mantiene proporciones consistentes en todas las tarjetas */
-  backdrop-filter: blur(12px);
-  transition: transform 0.4s var(--ease-expo), 
-              box-shadow 0.4s var(--ease-expo),
-              background 0.4s var(--ease-expo),
-              border-color 0.4s var(--ease-expo);
+  padding: 2.25rem 1.75rem !important;
+  height: 100%;
+  min-height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.03);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              background 0.35s ease;
   z-index: 1;
 }
 
-/* Aura / Resplandor orgánico al hacer hover */
+/* Resplandor suave orgánico al hover */
 .card-especialidad::after {
   content: '';
   position: absolute;
@@ -243,23 +250,29 @@ button {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at center, rgba(199, 209, 198, 0.35) 0%, rgba(255, 255, 255, 0) 65%);
+  background: radial-gradient(circle at center, rgba(199, 209, 198, 0.3) 0%, rgba(255, 255, 255, 0) 65%);
   opacity: 0;
-  transition: opacity 0.5s var(--ease-expo), transform 0.5s var(--ease-expo);
+  transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: none;
   z-index: -1;
 }
 
+.card-especialidad h3 {
+  font-family: var(--font-serif-titulos);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--color-texto-principal);
+}
+
 .card-especialidad:hover {
-  transform: translateY(-6px) scale(1.015);
-  background: rgba(255, 255, 255, 0.98) !important;
-  border-color: rgba(143, 166, 136, 0.5);
-  box-shadow: 0 20px 40px -15px rgba(115, 140, 108, 0.18);
+  transform: translateY(-6px);
+  border-color: var(--color-cta);
+  box-shadow: 0 18px 36px -10px rgba(115, 140, 108, 0.2);
 }
 
 .card-especialidad:hover::after {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .card-especialidad .link-flecha {
@@ -267,15 +280,25 @@ button {
   align-items: center;
   gap: 0.4rem;
   margin-top: 1.5rem;
-  font-size: var(--fs-small);
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--color-cta);
-  transition: var(--transition-suave);
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .card-especialidad:hover .link-flecha {
   transform: translateX(6px);
   color: var(--color-cta-hover);
+}
+
+/* --- CANALES DE CONTACTO --- */
+.canal-contacto:hover {
+  transform: translateY(-4px);
+  background: var(--color-cta) !important;
+}
+
+.canal-contacto:hover svg {
+  color: var(--color-cta-texto) !important;
 }
 
 /* --- FOOTER --- */
@@ -285,18 +308,24 @@ button {
   gap: 2.5rem;
 }
 
-/* --- ADAPTACIÓN RESPONSIVA --- */
+/* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 1024px) {
   .grid-especialidades {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas en Tablets */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .grid-especialidades {
-    grid-template-columns: 1fr; /* 1 columna en Móviles */
+    grid-template-columns: 1fr;
     gap: 1.25rem;
+  }
+
+  .hero-grid,
+  .grid-2-col {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
   }
 
   .nav-desktop {
