@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { perfil } from '../../data/contenido'
 import Icono from '../ui/Icono'
 
@@ -13,69 +13,73 @@ const enlaces = [
 
 function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const location = useLocation()
 
   return (
-    <header
-      style={{
-        borderBottom: '1px solid var(--color-sage-medio)',
-        position: 'sticky',
-        top: 0,
-        background: 'var(--color-fondo-crema)',
-        zIndex: 50,
-      }}
-    >
-      <div
-        className="contenedor"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: 'var(--header-height)',
-        }}
-      >
-        <Link to="/" style={{ fontFamily: 'var(--font-serif-titulos)', fontSize: '1.4rem' }}>
+    <header className="site-header">
+      <div className="contenedor header-wrapper">
+        {/* Brand / Logo */}
+        <Link to="/" className="brand-logo">
           {perfil.nombre}
         </Link>
 
-        {/* Nav desktop */}
-        <nav style={{ display: 'flex', gap: '1.5rem' }} className="nav-desktop">
-          {enlaces.map((e) => (
-            <Link key={e.to} to={e.to}>
-              {e.label}
-            </Link>
-          ))}
+        {/* Nav desktop pill */}
+        <nav className="nav-desktop">
+          {enlaces.map((e) => {
+            const isActive = location.pathname === e.to
+            return (
+              <Link 
+                key={e.to} 
+                to={e.to} 
+                className={`nav-link ${isActive ? 'active' : ''}`}
+              >
+                {e.label}
+              </Link>
+            )
+          })}
         </nav>
 
-        <Link to="/reservar-cita" className="btn btn-primario nav-desktop">
-          Reservar Cita
-        </Link>
+        {/* Botón CTA desktop */}
+        <div className="nav-desktop">
+          <Link to="/reservar-cita" className="btn btn-primario btn-nav">
+            Reservar Cita
+          </Link>
+        </div>
 
-        {/* Botón hamburguesa mobile */}
+        {/* Botón hamburguesa mobile (SIN style inline de display) */}
         <button
           className="nav-mobile-toggle"
           onClick={() => setMenuAbierto(!menuAbierto)}
           aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
-          style={{ display: 'flex', alignItems: 'center' }}
         >
           <Icono nombre={menuAbierto ? 'cerrar' : 'menu'} size={24} />
         </button>
       </div>
 
-      {/* Menú mobile */}
+      {/* Menú desplegable mobile */}
       {menuAbierto && (
-        <nav
-          className="contenedor"
-          style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '1.5rem' }}
-        >
-          {enlaces.map((e) => (
-            <Link key={e.to} to={e.to} onClick={() => setMenuAbierto(false)}>
-              {e.label}
+        <div className="mobile-menu-overlay">
+          <nav className="contenedor mobile-menu-content">
+            {enlaces.map((e) => (
+              <Link 
+                key={e.to} 
+                to={e.to} 
+                className="mobile-link"
+                onClick={() => setMenuAbierto(false)}
+              >
+                {e.label}
+              </Link>
+            ))}
+            <Link 
+              to="/reservar-cita" 
+              className="btn btn-primario" 
+              onClick={() => setMenuAbierto(false)}
+              style={{ marginTop: '0.5rem', textAlign: 'center' }}
+            >
+              Reservar Cita
             </Link>
-          ))}
-          <Link to="/reservar-cita" className="btn btn-primario" onClick={() => setMenuAbierto(false)}>
-            Reservar Cita
-          </Link>
-        </nav>
+          </nav>
+        </div>
       )}
     </header>
   )

@@ -7,66 +7,66 @@ function Footer() {
     <footer style={{ background: 'var(--color-texto-principal)', color: 'var(--color-fondo-crema)', marginTop: 'var(--space-xl)' }}>
       <div className="contenedor seccion grid-footer">
         <div>
-          <p style={{ fontFamily: 'var(--font-serif-titulos)', fontSize: '1.4rem', color: 'var(--color-fondo-crema)' }}>
+          <p style={{ fontFamily: 'var(--font-serif-titulos)', fontSize: '1.5rem', color: 'var(--color-fondo-crema)' }}>
             {perfil.nombre}
           </p>
           <p style={{ color: '#C9C6C1', marginTop: '0.3rem' }}>{perfil.titulo}</p>
-          <p style={{ color: '#C9C6C1', marginTop: '1.25rem', maxWidth: 280, lineHeight: 1.7 }}>
+          <p style={{ color: '#9C9995', marginTop: '1.25rem', maxWidth: 280, lineHeight: 1.6, fontSize: '0.95rem' }}>
             {perfil.fraseHero}
           </p>
         </div>
 
         <div>
-          <h3 style={{ color: 'var(--color-fondo-crema)', fontSize: '1rem', letterSpacing: '0.03em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+          <h3 style={{ color: 'var(--color-fondo-crema)', fontSize: '0.9rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '1.2rem', opacity: 0.9 }}>
             Contacto
           </h3>
-          <p style={{ color: '#C9C6C1', display: 'flex', gap: '0.6rem', marginBottom: '0.6rem' }}>
+          <p style={{ color: '#C9C6C1', display: 'flex', gap: '0.6rem', marginBottom: '0.8rem', fontSize: '0.95rem' }}>
             <Icono nombre="email" size={18} style={{ flexShrink: 0, marginTop: 2 }} />
             <span>{contacto.direccion}, {contacto.ciudad}</span>
           </p>
-          <p style={{ display: 'flex', gap: '0.6rem', marginBottom: '0.6rem' }}>
+          <p style={{ display: 'flex', gap: '0.6rem', marginBottom: '0.8rem', fontSize: '0.95rem' }}>
             <Icono nombre="whatsapp" size={18} style={{ flexShrink: 0, marginTop: 2, color: '#C9C6C1' }} />
             <a href={`tel:+591${contacto.celular}`} style={{ color: '#C9C6C1' }}>
               {contacto.celular}
             </a>
           </p>
-          <p style={{ color: '#C9C6C1', fontSize: 'var(--fs-small)', marginTop: '1rem' }}>
+          <p style={{ color: '#9C9995', fontSize: 'var(--fs-small)', marginTop: '1rem' }}>
             {contacto.horario || 'Horario de atención: por confirmar'}
           </p>
         </div>
 
         <div>
-          <h3 style={{ color: 'var(--color-fondo-crema)', fontSize: '1rem', letterSpacing: '0.03em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+          <h3 style={{ color: 'var(--color-fondo-crema)', fontSize: '0.9rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '1.2rem', opacity: 0.9 }}>
             Enlaces
           </h3>
           <p style={{ marginBottom: '0.6rem' }}>
-            <Link to="/sobre-mi" style={{ color: '#C9C6C1' }}>Sobre mí</Link>
+            <Link to="/sobre-mi" style={{ color: '#C9C6C1', transition: 'var(--transition-rapida)' }}>Sobre mí</Link>
           </p>
           <p style={{ marginBottom: '0.6rem' }}>
-            <Link to="/especialidades" style={{ color: '#C9C6C1' }}>Especialidades</Link>
+            <Link to="/especialidades" style={{ color: '#C9C6C1', transition: 'var(--transition-rapida)' }}>Especialidades</Link>
           </p>
           <p style={{ marginBottom: '0.6rem' }}>
-            <Link to="/aviso-etico" style={{ color: '#C9C6C1' }}>Aviso Ético</Link>
+            <Link to="/aviso-etico" style={{ color: '#C9C6C1', transition: 'var(--transition-rapida)' }}>Aviso Ético</Link>
           </p>
         </div>
 
         <div>
-          <h3 style={{ color: 'var(--color-fondo-crema)', fontSize: '1rem', letterSpacing: '0.03em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+          <h3 style={{ color: 'var(--color-fondo-crema)', fontSize: '0.9rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '1.2rem', opacity: 0.9 }}>
             ¿Lista para empezar?
           </h3>
-          <Link to="/reservar-cita" className="btn btn-primario" style={{ display: 'inline-block' }}>
+          <Link to="/reservar-cita" className="btn btn-primario">
             Reservar Cita
           </Link>
         </div>
       </div>
 
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}>
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
         <div
           className="contenedor"
           style={{
-            padding: '1.25rem var(--space-md)',
+            padding: '1.5rem var(--space-md)',
             fontSize: 'var(--fs-small)',
-            color: '#9C9995',
+            color: '#8A8783',
             display: 'flex',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
