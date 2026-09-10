@@ -13,7 +13,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans-cuerpo, system-ui, sans-serif);
+  font-family: var(--font-sans-cuerpo, system-ui, -apple-system, sans-serif);
   font-size: var(--fs-body, 1rem);
   color: var(--color-texto-principal, #2b2b2b);
   background-color: var(--color-fondo-crema, #faf8f5);
@@ -23,15 +23,14 @@ body {
   width: 100%;
 }
 
-/* --- CONTENEDOR GLOBAL (MARGEN LATERAL DE SEGURIDAD) --- */
+/* --- CONTENEDOR GLOBAL CON MARGEN DE SEGURIDAD LATERAL --- */
 .contenedor {
   width: 100%;
   max-width: var(--max-width-contenido, 1140px);
   margin-left: auto;
   margin-right: auto;
-  /* Margen interno fluido: mínimo 1.5rem (24px) en celular hasta 3rem en pantallas grandes */
-  padding-left: clamp(1.5rem, 5vw, 3rem) !important;
-  padding-right: clamp(1.5rem, 5vw, 3rem) !important;
+  padding-left: clamp(1.25rem, 5vw, 2.5rem);
+  padding-right: clamp(1.25rem, 5vw, 2.5rem);
 }
 
 section,
@@ -42,7 +41,7 @@ section,
   scroll-margin-top: calc(var(--header-height, 70px) + 1rem);
 }
 
-/* --- TIPOGRAFÍA --- */
+/* --- TIPOGRAFÍA Y ELEMENTOS --- */
 h1, h2, h3, h4 {
   font-family: var(--font-serif-titulos, serif);
   font-weight: 500;
@@ -65,9 +64,113 @@ img {
   border-radius: var(--radius-md, 12px);
 }
 
+/* --- HEADER Y NAVEGACIÓN --- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 251, 245, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(143, 166, 136, 0.18);
+  width: 100%;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height, 70px);
+}
+
+.brand-logo {
+  font-family: var(--font-serif-titulos, serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-texto-principal, #2b2b2b);
+  text-decoration: none;
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  padding: 0.45rem 1rem;
+  font-size: 0.92rem;
+  color: var(--color-texto-secundario, #555);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-link.active {
+  background: #ffffff;
+  color: var(--color-texto-principal, #2b2b2b);
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(143, 166, 136, 0.15);
+  color: var(--color-texto-principal, #2b2b2b);
+  border: none;
+  cursor: pointer;
+}
+
+/* MENÚ MÓVIL DESPLEGABLE CORREGIDO */
+.mobile-menu-overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 251, 245, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(143, 166, 136, 0.2);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 0 2rem 0;
+  z-index: 99;
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-link {
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-texto-principal, #2b2b2b);
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed rgba(143, 166, 136, 0.25);
+  text-decoration: none;
+  text-align: left;
+}
+
+.mobile-link:last-of-type {
+  border-bottom: none;
+}
+
+.mobile-btn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
 /* --- SECCIÓN HERO (INICIO) --- */
 .seccion-hero {
-  padding-top: calc(var(--header-height, 70px) + 2.5rem);
+  padding-top: calc(var(--header-height, 70px) + 2rem);
   padding-bottom: 3.5rem;
 }
 
@@ -78,7 +181,7 @@ img {
   align-items: center;
 }
 
-/* --- TARJETAS / BURBUJAS ("EN QUÉ PUEDO ACOMPAÑARTE") --- */
+/* --- TARJETAS / ESPECIALIDADES --- */
 .grid-especialidades {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -129,25 +232,7 @@ img {
   transform: translateY(-2px);
 }
 
-/* --- HEADER GLASSMORPHISM --- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255, 251, 245, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(143, 166, 136, 0.18);
-}
-
-.header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--header-height, 70px);
-}
-
-/* --- FOOTER ESTRUCTURADO Y LIMPIO --- */
+/* --- FOOTER --- */
 .site-footer {
   background: #232622;
   color: #e5e2dc;
@@ -236,8 +321,16 @@ img {
   gap: 0.75rem;
 }
 
-/* --- ADAPTACIONES PARA DISPOSITIVOS MÓVILES (PANTALLAS < 768px) --- */
+/* --- RESPONSIVE MOBILE --- */
 @media (max-width: 768px) {
+  .nav-desktop {
+    display: none !important;
+  }
+
+  .nav-mobile-toggle {
+    display: flex !important;
+  }
+
   .hero-grid,
   .grid-2-col {
     grid-template-columns: 1fr;

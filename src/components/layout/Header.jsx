@@ -1,81 +1,50 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { perfil } from '../../data/contenido'
 import Icono from '../ui/Icono'
 
-const enlaces = [
-  { to: '/', label: 'Inicio' },
-  { to: '/sobre-mi', label: 'Sobre mí' },
-  { to: '/especialidades', label: 'Especialidades' },
-  { to: '/videos', label: 'Videos' },
-  { to: '/contacto', label: 'Contacto' },
-]
-
-function Header() {
+export default function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false)
-  const location = useLocation()
+
+  const toggleMenu = () => setMenuAbierto(!menuAbierto)
+  const cerrarMenu = () => setMenuAbierto(false)
 
   return (
     <header className="site-header">
       <div className="contenedor header-wrapper">
-        {/* Brand / Logo */}
-        <Link to="/" className="brand-logo">
+        <Link to="/" className="brand-logo" onClick={cerrarMenu}>
           {perfil.nombre}
         </Link>
 
-        {/* Nav desktop pill */}
+        {/* Navegación Desktop */}
         <nav className="nav-desktop">
-          {enlaces.map((e) => {
-            const isActive = location.pathname === e.to
-            return (
-              <Link 
-                key={e.to} 
-                to={e.to} 
-                className={`nav-link ${isActive ? 'active' : ''}`}
-              >
-                {e.label}
-              </Link>
-            )
-          })}
+          <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Inicio</NavLink>
+          <NavLink to="/sobre-mi" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Sobre mí</NavLink>
+          <NavLink to="/especialidades" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Especialidades</NavLink>
+          <NavLink to="/videos" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Videos</NavLink>
+          <NavLink to="/contacto" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contacto</NavLink>
         </nav>
 
-        {/* Botón CTA desktop */}
-        <div className="nav-desktop">
-          <Link to="/reservar-cita" className="btn btn-primario btn-nav">
-            Reservar Cita
-          </Link>
-        </div>
-
-        {/* Botón hamburguesa mobile (SIN style inline de display) */}
-        <button
-          className="nav-mobile-toggle"
-          onClick={() => setMenuAbierto(!menuAbierto)}
-          aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+        {/* Botón Hamburgesa */}
+        <button 
+          className="nav-mobile-toggle" 
+          onClick={toggleMenu}
+          aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
         >
-          <Icono nombre={menuAbierto ? 'cerrar' : 'menu'} size={24} />
+          <Icono nombre={menuAbierto ? "close" : "menu"} size={24} />
         </button>
       </div>
 
-      {/* Menú desplegable mobile */}
+      {/* Menú Flotante Móvil */}
       {menuAbierto && (
         <div className="mobile-menu-overlay">
-          <nav className="contenedor mobile-menu-content">
-            {enlaces.map((e) => (
-              <Link 
-                key={e.to} 
-                to={e.to} 
-                className="mobile-link"
-                onClick={() => setMenuAbierto(false)}
-              >
-                {e.label}
-              </Link>
-            ))}
-            <Link 
-              to="/reservar-cita" 
-              className="btn btn-primario" 
-              onClick={() => setMenuAbierto(false)}
-              style={{ marginTop: '0.5rem', textAlign: 'center' }}
-            >
+          <nav className="mobile-menu-content contenedor">
+            <NavLink to="/" className="mobile-link" onClick={cerrarMenu}>Inicio</NavLink>
+            <NavLink to="/sobre-mi" className="mobile-link" onClick={cerrarMenu}>Sobre mí</NavLink>
+            <NavLink to="/especialidades" className="mobile-link" onClick={cerrarMenu}>Especialidades</NavLink>
+            <NavLink to="/videos" className="mobile-link" onClick={cerrarMenu}>Videos</NavLink>
+            <NavLink to="/contacto" className="mobile-link" onClick={cerrarMenu}>Contacto</NavLink>
+            <Link to="/reservar-cita" className="btn btn-primario mobile-btn" onClick={cerrarMenu}>
               Reservar Cita
             </Link>
           </nav>
@@ -84,5 +53,3 @@ function Header() {
     </header>
   )
 }
-
-export default Header
