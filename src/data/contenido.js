@@ -236,3 +236,14 @@ export function seoEspecialidad(especialidad) {
     ruta: `/especialidades/${especialidad.id}`,
   };
 }
+
+// ============================================
+// IMÁGENES TEMPORALES (stock, licencia libre de Pexels) — reemplazar
+// cada URL por la foto real correspondiente cuando Rebeca las entregue.
+// Es el único lugar donde hay que cambiar cada link.
+// ============================================
+export const imagenesTemporales = {
+  heroRetrato: "https://images.pexels.com/photos/22988973/pexels-photo-22988973.jpeg",
+  sobreMiRetrato: "https://images.pexels.com/photos/8430297/pexels-photo-8430297.jpeg",
+  consultorio: "https://images.pexels.com/photos/6255807/pexels-photo-6255807.jpeg",
+};

@@ -1,4 +1,4 @@
-import { perfil } from '../../data/contenido'
+import { perfil, imagenesTemporales } from '../../data/contenido'
 import ImagenPlaceholder from '../ui/ImagenPlaceholder'
 import FadeInSection from '../ui/FadeInSection'
 
@@ -15,7 +15,12 @@ function PorQueTerapia() {
           alignItems: 'center',
         }}
       >
-        <ImagenPlaceholder ratio="1/1" label="Espacio del consultorio — pendiente" />
+        <ImagenPlaceholder
+          ratio="1/1"
+          src={imagenesTemporales.consultorio}
+          alt="Sesión de terapia — foto temporal, será reemplazada"
+          label="Espacio del consultorio — pendiente"
+        />
         <div>
           <h2>¿Por qué terapia conmigo?</h2>
           <p style={{ marginTop: '1rem' }}>{perfil.enfoque}</p>

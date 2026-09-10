@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { perfil } from '../../data/contenido'
+import { perfil, imagenesTemporales } from '../../data/contenido'
 import ImagenPlaceholder from '../ui/ImagenPlaceholder'
 
 function Hero() {
@@ -24,7 +24,12 @@ function Hero() {
           Reservar Cita
         </Link>
       </div>
-      <ImagenPlaceholder ratio="4/5" label="Foto profesional de Rebeca — pendiente" />
+      <ImagenPlaceholder
+        ratio="4/5"
+        src={imagenesTemporales.heroRetrato}
+        alt="Retrato profesional — foto temporal, será reemplazada"
+        label="Foto profesional de Rebeca — pendiente"
+      />
     </section>
   )
 }

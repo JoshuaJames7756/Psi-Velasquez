@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { perfil, formacion, seo } from '../data/contenido'
+import { perfil, formacion, seo, imagenesTemporales } from '../data/contenido'
 import ImagenPlaceholder from '../components/ui/ImagenPlaceholder'
 import FadeInSection from '../components/ui/FadeInSection'
 import { useSEO } from '../hooks/useSEO'
@@ -15,7 +15,12 @@ function SobreMi() {
         style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 'var(--space-lg)', alignItems: 'center' }}
         id="sobre-mi-hero"
       >
-        <ImagenPlaceholder ratio="1/1" label="Foto personal de Rebeca — pendiente" />
+        <ImagenPlaceholder
+          ratio="1/1"
+          src={imagenesTemporales.sobreMiRetrato}
+          alt="Retrato profesional — foto temporal, será reemplazada"
+          label="Foto personal de Rebeca — pendiente"
+        />
         <div>
           <h1>Conozca a su psicóloga</h1>
           <p style={{ marginTop: '1rem' }}>{perfil.bioCorta}</p>
