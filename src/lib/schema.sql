@@ -54,12 +54,14 @@ CREATE TABLE bloqueos (
   motivo VARCHAR(200)
 );
 
--- Videos de Instagram/TikTok — Rebeca los gestiona desde el panel admin
--- sin tocar código; solo pega la URL y el sistema genera el embed.
+-- Videos de Instagram — Rebeca los gestiona desde el panel admin sin
+-- tocar código; solo pega la URL del reel/post y el sistema genera el
+-- embed. La columna plataforma se mantiene (aunque hoy solo se usa
+-- 'instagram') por si en el futuro se admite otra red social.
 CREATE TABLE videos (
   id SERIAL PRIMARY KEY,
   url VARCHAR(500) NOT NULL,
-  plataforma VARCHAR(20) NOT NULL,  -- 'instagram' | 'tiktok'
+  plataforma VARCHAR(20) NOT NULL,  -- 'instagram' por ahora
   titulo VARCHAR(200),
   miniatura_url VARCHAR(500),       -- Cloudinary, opcional (thumbnail manual si el embed no trae uno)
   orden INT DEFAULT 0,              -- para controlar el orden en el grid

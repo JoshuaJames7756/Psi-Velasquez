@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { perfil } from '../../data/contenido'
+import Icono from '../ui/Icono'
 
 const enlaces = [
   { to: '/', label: 'Inicio' },
@@ -53,9 +54,10 @@ function Header() {
         <button
           className="nav-mobile-toggle"
           onClick={() => setMenuAbierto(!menuAbierto)}
-          aria-label="Abrir menú"
+          aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+          style={{ display: 'flex', alignItems: 'center' }}
         >
-          ☰
+          <Icono nombre={menuAbierto ? 'cerrar' : 'menu'} size={24} />
         </button>
       </div>
 

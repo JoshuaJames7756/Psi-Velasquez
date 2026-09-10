@@ -15,7 +15,7 @@ function Videos() {
     <div className="seccion contenedor">
       <h1>Contenido en video</h1>
       <p style={{ maxWidth: 500, marginBottom: '2rem' }}>
-        Reflexiones y tips sobre salud mental, directo desde Instagram y TikTok.
+        Reflexiones y tips sobre salud mental, directo desde Instagram.
       </p>
 
       {cargando && <p>Cargando videos…</p>}
@@ -26,7 +26,7 @@ function Videos() {
         </p>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem' }}>
         {videos.map((v) => (
           <VideoCard key={v.id} video={v} onPlay={setVideoActivo} />
         ))}

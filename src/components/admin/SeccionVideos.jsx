@@ -9,6 +9,7 @@ function SeccionVideos() {
   const [titulo, setTitulo] = useState('')
   const [miniaturaUrl, setMiniaturaUrl] = useState('')
   const [guardando, setGuardando] = useState(false)
+  const [error, setError] = useState(null)
   const [listaLocal, setListaLocal] = useState(null)
 
   const lista = listaLocal ?? videos
@@ -17,6 +18,7 @@ function SeccionVideos() {
     e.preventDefault()
     if (!url.trim()) return
     setGuardando(true)
+    setError(null)
     try {
       const token = await getToken()
       const res = await fetch('/api/videos', {
@@ -24,13 +26,17 @@ function SeccionVideos() {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ url, titulo, miniatura_url: miniaturaUrl }),
       })
+      const data = await res.json()
       if (res.ok) {
-        const data = await res.json()
         setListaLocal([data.video, ...lista])
         setUrl('')
         setTitulo('')
         setMiniaturaUrl('')
+      } else {
+        setError(data.error || 'No se pudo agregar el video.')
       }
+    } catch {
+      setError('Hubo un problema de conexión.')
     } finally {
       setGuardando(false)
     }
@@ -50,9 +56,15 @@ function SeccionVideos() {
     <div>
       <h1>Videos</h1>
       <p style={{ marginBottom: '1.5rem' }}>
-        Pega el link de un Reel de Instagram o un video de TikTok para que aparezca en tu
-        sitio. No necesitas tocar nada más.
+        Pega el link de un Reel o publicación de Instagram para que aparezca en tu sitio.
+        No necesitas tocar nada más.
       </p>
+
+      {error && (
+        <p style={{ color: 'var(--color-error)', marginBottom: '1rem', padding: '0.75rem', background: '#fdf1ee', borderRadius: 'var(--radius-sm)' }}>
+          {error}
+        </p>
+      )}
 
       <form
         onSubmit={handleAgregar}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Calendario from '../components/citas/Calendario'
 import SelectorHora from '../components/citas/SelectorHora'
 import FormularioAdmision from '../components/citas/FormularioAdmision'
+import Icono from '../components/ui/Icono'
 import { useSEO } from '../hooks/useSEO'
 import { seo } from '../data/contenido'
 
@@ -114,7 +115,20 @@ function ReservarCita() {
 
       {paso === PASOS.CONFIRMACION && (
         <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-          <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>✓</div>
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: '50%',
+              background: 'var(--color-cta)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem',
+            }}
+          >
+            <Icono nombre="check" size={28} style={{ color: 'var(--color-cta-texto)' }} />
+          </div>
           <h2>Solicitud recibida</h2>
           <p style={{ marginTop: '1rem' }}>{mensajeConfirmacion}</p>
           <Link to="/" className="btn btn-outline" style={{ marginTop: '2rem' }}>

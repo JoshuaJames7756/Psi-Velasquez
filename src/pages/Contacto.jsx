@@ -1,14 +1,15 @@
 import { contacto, seo } from '../data/contenido'
 import { useSEO } from '../hooks/useSEO'
+import Icono from '../components/ui/Icono'
 
 const direccionCompleta = `${contacto.direccion}, ${contacto.ciudad}`
 const mapaSrc = `https://www.google.com/maps?q=${encodeURIComponent(direccionCompleta)}&output=embed`
 
 const canalesContacto = [
-  { id: 'whatsapp', label: 'WhatsApp', href: contacto.whatsappUrl, icono: '💬' },
-  { id: 'instagram', label: 'Instagram', href: contacto.instagramUrl, icono: '📷' },
-  { id: 'linkedin', label: 'LinkedIn', href: contacto.linkedinUrl, icono: '💼' },
-  { id: 'email', label: 'Email', href: contacto.email ? `mailto:${contacto.email}` : null, icono: '✉️' },
+  { id: 'whatsapp', label: 'WhatsApp', href: contacto.whatsappUrl, icono: 'whatsapp' },
+  { id: 'instagram', label: 'Instagram', href: contacto.instagramUrl, icono: 'instagram' },
+  { id: 'linkedin', label: 'LinkedIn', href: contacto.linkedinUrl, icono: 'linkedin' },
+  { id: 'email', label: 'Email', href: contacto.email ? `mailto:${contacto.email}` : null, icono: 'email' },
 ]
 
 function Contacto() {
@@ -30,6 +31,7 @@ function Contacto() {
               href={canal.href}
               target="_blank"
               rel="noopener noreferrer"
+              className="canal-contacto"
               style={{
                 width: 64,
                 height: 64,
@@ -38,13 +40,12 @@ function Contacto() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.6rem',
                 transition: 'var(--transition-suave)',
               }}
               aria-label={canal.label}
               title={canal.label}
             >
-              {canal.icono}
+              <Icono nombre={canal.icono} size={26} style={{ color: 'var(--color-texto-principal)' }} />
             </a>
           ) : null
         )}

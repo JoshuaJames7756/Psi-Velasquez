@@ -1,16 +1,7 @@
 import { Link } from 'react-router-dom'
 import { especialidades } from '../../data/contenido'
 import FadeInSection from '../ui/FadeInSection'
-
-// Íconos simples inline (sin dependencias externas, coherente con "cero librerías pesadas")
-const iconos = {
-  ansiedad: '〰️',
-  depresion: '🌧️',
-  estres: '🌀',
-  procesos_salud: '🌿',
-  adaptacion: '🧭',
-  pareja: '🤝',
-}
+import Icono from '../ui/Icono'
 
 function EspecialidadesPreview() {
   return (
@@ -38,7 +29,11 @@ function EspecialidadesPreview() {
               }}
               className="card-especialidad"
             >
-              <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{iconos[esp.id] || '💬'}</div>
+              <Icono
+                nombre={esp.id}
+                size={30}
+                style={{ color: 'var(--color-texto-principal)', marginBottom: '0.9rem' }}
+              />
               <h3>{esp.nombre}</h3>
               <p style={{ fontSize: 'var(--fs-small)', marginTop: '0.5rem' }}>{esp.resumen}</p>
             </div>

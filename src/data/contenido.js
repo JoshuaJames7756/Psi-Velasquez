@@ -169,9 +169,9 @@ export const contacto = {
   modalidad: "Atención presencial en Cochabamba - Bolivia · Atención online",
   celular: "60389762",
   whatsappUrl: "https://wa.me/59160389762", // PENDIENTE confirmar formato con cliente
-  instagramUrl: null, // PENDIENTE
-  linkedinUrl: null,  // PENDIENTE
-  email: null,        // PENDIENTE
+  instagramUrl: null, // PENDIENTE — falta el link exacto del perfil
+  linkedinUrl: null,  // CONFIRMADO que lo usará — falta el link exacto del perfil
+  email: null,        // CONFIRMADO que lo tendrá — falta la dirección exacta
   horario: null,       // PENDIENTE — cliente en espera
 };
 

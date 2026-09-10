@@ -11,16 +11,15 @@ import { requireAdmin } from '../src/lib/auth.js'
 const sql = neon(process.env.DATABASE_URL)
 
 function detectarPlataforma(url) {
-  if (url.includes('tiktok.com')) return 'tiktok'
   if (url.includes('instagram.com')) return 'instagram'
   return 'otro'
 }
 
 /**
  * Limpia parámetros de tracking (?utm_source=, ?igsh=, etc.) que Instagram
- * y TikTok agregan al copiar un link desde la app. Esos parámetros pueden
- * hacer que el link redirija al feed general en vez del post/reel exacto
- * cuando se abre sin sesión iniciada. Se conserva solo la ruta limpia.
+ * agrega al copiar un link desde la app. Esos parámetros pueden hacer que
+ * el link redirija al feed general en vez del post/reel exacto cuando se
+ * abre sin sesión iniciada. Se conserva solo la ruta limpia.
  */
 function limpiarUrl(url) {
   try {
@@ -63,6 +62,11 @@ export default async function handler(req, res) {
     if (!url) return res.status(400).json({ error: 'Falta la URL del video' })
 
     const urlLimpia = limpiarUrl(url)
+
+    // Por ahora el sitio solo soporta contenido de Instagram (reels/posts).
+    if (!urlLimpia.includes('instagram.com')) {
+      return res.status(400).json({ error: 'Por ahora solo se admiten links de Instagram.' })
+    }
 
     try {
       const [nuevo] = await sql`

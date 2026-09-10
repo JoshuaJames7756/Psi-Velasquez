@@ -1,36 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 /**
- * Carga el script embed.js de Instagram o TikTok una sola vez por sesión,
- * y le pide que procese los embeds nuevos que aparezcan en el DOM.
+ * Carga el script embed.js de Instagram una sola vez por sesión, y le pide
+ * reprocesar el DOM cuando aparece un nuevo embed (por ejemplo, al abrir
+ * el modal con un video distinto).
  */
-function cargarScriptEmbed(plataforma) {
-  const idScript = plataforma === 'tiktok' ? 'tiktok-embed-script' : 'instagram-embed-script'
-  const src = plataforma === 'tiktok'
-    ? 'https://www.tiktok.com/embed.js'
-    : 'https://www.instagram.com/embed.js'
+function cargarScriptEmbedInstagram() {
+  const idScript = 'instagram-embed-script'
 
-  const existente = document.getElementById(idScript)
-  if (existente) {
-    // El script ya está cargado — se le pide reprocesar el DOM.
-    if (plataforma === 'instagram' && window.instgrm) {
-      window.instgrm.Embeds.process()
-    }
-    // TikTok reprocesa automáticamente vía MutationObserver interno, no
-    // requiere una llamada manual como Instagram.
+  if (document.getElementById(idScript)) {
+    if (window.instgrm) window.instgrm.Embeds.process()
     return
   }
 
   const script = document.createElement('script')
   script.id = idScript
-  script.src = src
+  script.src = 'https://www.instagram.com/embed.js'
   script.async = true
   document.body.appendChild(script)
 }
 
 function VideoModal({ video, onClose }) {
-  const contenedorRef = useRef(null)
-
   useEffect(() => {
     const handleEsc = (e) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', handleEsc)
@@ -38,7 +28,7 @@ function VideoModal({ video, onClose }) {
   }, [onClose])
 
   useEffect(() => {
-    if (video) cargarScriptEmbed(video.plataforma)
+    if (video) cargarScriptEmbedInstagram()
   }, [video])
 
   if (!video) return null
@@ -74,36 +64,19 @@ function VideoModal({ video, onClose }) {
           </button>
         </div>
 
-        <div ref={contenedorRef} style={{ padding: '0 0.5rem 1rem', minHeight: 200 }}>
-          {video.plataforma === 'instagram' && (
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={video.url}
-              data-instgrm-version="14"
-              style={{ margin: 0, width: '100%' }}
-            />
+        <div style={{ padding: '0 0.5rem 1rem', minHeight: 200 }}>
+          {video.titulo && (
+            <p style={{ padding: '0 0.5rem', marginBottom: '0.75rem', fontWeight: 600 }}>
+              {video.titulo}
+            </p>
           )}
 
-          {video.plataforma === 'tiktok' && (
-            <blockquote
-              className="tiktok-embed"
-              cite={video.url}
-              style={{ margin: '0 auto' }}
-            >
-              <a href={video.url} target="_blank" rel="noopener noreferrer">
-                {video.titulo || 'Ver en TikTok'}
-              </a>
-            </blockquote>
-          )}
-
-          {video.plataforma !== 'instagram' && video.plataforma !== 'tiktok' && (
-            <div style={{ padding: '0 1rem' }}>
-              <p style={{ marginBottom: '1rem' }}>{video.titulo || 'Mira este video:'}</p>
-              <a href={video.url} target="_blank" rel="noopener noreferrer" className="btn btn-primario">
-                Ver video
-              </a>
-            </div>
-          )}
+          <blockquote
+            className="instagram-media"
+            data-instgrm-permalink={video.url}
+            data-instgrm-version="14"
+            style={{ margin: 0, width: '100%' }}
+          />
         </div>
       </div>
     </div>
