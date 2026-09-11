@@ -31,8 +31,10 @@ function VideosPreview() {
               gap: '1.5rem',
             }}
           >
-            {videos.map((v) => (
-              <VideoCard key={v.id} video={v} onPlay={setVideoActivo} />
+            {videos.map((v, i) => (
+              <FadeInSection key={v.id} delay={i * 60}>
+                <VideoCard video={v} onPlay={setVideoActivo} />
+              </FadeInSection>
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>

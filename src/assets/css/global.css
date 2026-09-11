@@ -15,7 +15,13 @@ body {
   font-family: var(--font-sans-cuerpo);
   font-size: var(--fs-body);
   color: var(--color-texto-principal);
-  background-color: var(--color-fondo-crema);
+  /* Gradiente muy sutil en vez de color plano — da profundidad sin
+     perder la sensación de calidez ni oscurecer el contenido. */
+  background:
+    radial-gradient(circle at 15% 0%, rgba(199, 209, 198, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 100% 30%, rgba(231, 211, 195, 0.15) 0%, transparent 50%),
+    var(--color-fondo-crema);
+  background-attachment: fixed;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -195,6 +201,8 @@ button {
   font-size: var(--fs-body);
   font-weight: 500;
   transition: var(--transition-suave);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primario {
@@ -209,6 +217,45 @@ button {
   box-shadow: var(--shadow-card-hover);
 }
 
+/* Efecto shine: una franja de brillo cruza el botón al hover */
+.btn-primario::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s var(--ease-expo);
+}
+
+.btn-primario:hover::before {
+  left: 130%;
+}
+
+/* Variante del botón CTA sobre fondo de color (ej. sección de cierre) */
+.btn-cta-invertido::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(143,166,136,0.25), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s var(--ease-expo);
+}
+
+.btn-cta-invertido:hover::before {
+  left: 130%;
+}
+
+.btn-cta-invertido:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(0,0,0,0.18);
+}
+
 .btn-outline {
   border: 1.5px solid var(--color-texto-principal);
   color: var(--color-texto-principal);
@@ -217,6 +264,28 @@ button {
 .btn-outline:hover {
   background-color: var(--color-texto-principal);
   color: var(--color-fondo-crema);
+}
+
+/* Subrayado animado en los links de navegación (crece desde el centro) */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0.15rem;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-cta);
+  transition: width 0.3s var(--ease-expo), left 0.3s var(--ease-expo);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 60%;
+  left: 20%;
 }
 
 /* --- CUADRÍCULA DE ESPECIALIDADES (3 COLUMNAS EN ESCRITORIO) --- */
@@ -372,4 +441,23 @@ button {
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
   }
+
+  /* Panel admin: nav lateral fija de 220px rompe en mobile.
+     Se colapsa a una barra horizontal con scroll arriba del contenido. */
+  .admin-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-nav-links {
+    flex-direction: row !important;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* Evita overflow horizontal general: cualquier elemento (imagen, iframe)
+   que se pase del ancho de su contenedor se ajusta en vez de forzar
+   scroll horizontal de toda la página. */
+img, iframe, video {
+  max-width: 100%;
 }

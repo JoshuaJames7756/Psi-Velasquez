@@ -1,11 +1,25 @@
 import { Link } from 'react-router-dom'
 import { perfil, imagenesTemporales } from '../../data/contenido'
 import ImagenPlaceholder from '../ui/ImagenPlaceholder'
+import BlobDecorativo from '../ui/BlobDecorativo'
 
 function Hero() {
   return (
-    <section className="hero-grid seccion-hero">
-      <div>
+    <section className="hero-grid seccion-hero" style={{ position: 'relative', overflow: 'hidden' }}>
+      <BlobDecorativo
+        variante={1}
+        color="var(--color-sage-suave)"
+        opacity={0.35}
+        style={{ width: 420, height: 420, top: '-140px', left: '-180px', zIndex: 0 }}
+      />
+      <BlobDecorativo
+        variante={2}
+        color="var(--color-terracota-suave)"
+        opacity={0.3}
+        style={{ width: 320, height: 320, bottom: '-120px', right: '-100px', zIndex: 0 }}
+      />
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <h1 style={{ fontSize: 'var(--fs-hero)' }}>{perfil.nombre}</h1>
         <h2 style={{ color: 'var(--color-texto-secundario)', fontWeight: 400, marginTop: '0.25rem' }}>
           {perfil.titulo}
@@ -15,12 +29,14 @@ function Hero() {
           Reservar Cita
         </Link>
       </div>
-      <ImagenPlaceholder
-        ratio="4/5"
-        src={imagenesTemporales.heroRetrato}
-        alt="Retrato profesional"
-        label="Foto profesional de Rebeca"
-      />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <ImagenPlaceholder
+          ratio="4/5"
+          src={imagenesTemporales.heroRetrato}
+          alt="Retrato profesional"
+          label="Foto profesional de Rebeca"
+        />
+      </div>
     </section>
   )
 }

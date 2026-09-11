@@ -56,6 +56,10 @@ const trazos = {
   check: (
     <path d="M5 12.5 10 17l9-10" />
   ),
+  // Flecha hacia la derecha
+  'flecha-derecha': (
+    <path d="M4 12h15M13 6l6 6-6 6" />
+  ),
   // Advertencia
   advertencia: (
     <>

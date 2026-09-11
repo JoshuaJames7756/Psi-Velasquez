@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { especialidades, servicios, faq, seo, seoEspecialidad } from '../data/contenido'
 import FadeInSection from '../components/ui/FadeInSection'
+import CardEspecialidad from '../components/ui/CardEspecialidad'
 import { useSEO } from '../hooks/useSEO'
 
 function SeccionFAQ() {
@@ -29,32 +30,10 @@ function VistaListado() {
       <h1>{servicios.titulo}</h1>
       <p style={{ maxWidth: 600 }}>{servicios.descripcion}</p>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '1.5rem',
-          marginTop: '2rem',
-        }}
-      >
-        {especialidades.map((esp) => (
-          <FadeInSection key={esp.id} as={Link} to={`/especialidades/${esp.id}`}>
-            <div
-              className="card-especialidad"
-              style={{
-                background: 'var(--color-terracota-suave)',
-                padding: '1.75rem',
-                borderRadius: 'var(--radius-md)',
-                height: '100%',
-                transition: 'var(--transition-suave)',
-              }}
-            >
-              <h3>{esp.nombre}</h3>
-              <p style={{ marginTop: '0.5rem' }}>{esp.resumen}</p>
-              <span style={{ display: 'inline-block', marginTop: '1rem', fontSize: 'var(--fs-small)', textDecoration: 'underline' }}>
-                Conocer más
-              </span>
-            </div>
+      <div className="grid-especialidades">
+        {especialidades.map((esp, i) => (
+          <FadeInSection key={esp.id} as={Link} to={`/especialidades/${esp.id}`} className="card-especialidad-wrapper" delay={i * 70}>
+            <CardEspecialidad especialidad={esp} />
           </FadeInSection>
         ))}
       </div>

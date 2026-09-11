@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom'
 import { contacto, perfil } from '../../data/contenido'
 import Icono from '../ui/Icono'
+import BlobDecorativo from '../ui/BlobDecorativo'
 
 function Footer() {
   return (
-    <footer style={{ background: 'var(--color-texto-principal)', color: 'var(--color-fondo-crema)', marginTop: 'var(--space-xl)' }}>
-      <div className="contenedor seccion grid-footer">
+    <footer style={{ background: 'var(--color-texto-principal)', color: 'var(--color-fondo-crema)', marginTop: 'var(--space-xl)', position: 'relative', overflow: 'hidden' }}>
+      <BlobDecorativo
+        variante={1}
+        color="var(--color-sage-suave)"
+        opacity={0.06}
+        style={{ width: 460, height: 460, bottom: '-220px', right: '-140px', zIndex: 0 }}
+      />
+      <div className="contenedor seccion grid-footer" style={{ position: 'relative', zIndex: 1 }}>
         <div>
           <p style={{ fontFamily: 'var(--font-serif-titulos)', fontSize: '1.5rem', color: 'var(--color-fondo-crema)' }}>
             {perfil.nombre}
