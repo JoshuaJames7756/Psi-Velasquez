@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import ScrollToTop from './components/ui/ScrollToTop'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -13,10 +13,16 @@ import AdminPanel from './pages/AdminPanel'
 import NotFound from './pages/NotFound'
 
 function App() {
+  const { pathname } = useLocation()
+  // El panel admin tiene su propio layout (sidebar oscura tipo dashboard,
+  // sin Header/Footer del sitio público) — se sale intencionalmente de la
+  // identidad visual de las páginas para pacientes.
+  const esAdmin = pathname.startsWith('/admin')
+
   return (
     <>
       <ScrollToTop />
-      <Header />
+      {!esAdmin && <Header />}
       <main>
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -31,7 +37,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {!esAdmin && <Footer />}
     </>
   )
 }

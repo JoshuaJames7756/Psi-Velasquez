@@ -1,10 +1,21 @@
 import { Routes, Route } from 'react-router-dom'
-import { SignedIn, SignedOut, SignIn, UserButton } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, SignIn } from '@clerk/clerk-react'
 import AdminLayout from '../components/admin/AdminLayout'
+import DashboardResumen from '../components/admin/DashboardResumen'
 import SeccionSolicitudes from '../components/admin/SeccionSolicitudes'
 import SeccionAgenda from '../components/admin/SeccionAgenda'
 import SeccionFormulario from '../components/admin/SeccionFormulario'
 import SeccionVideos from '../components/admin/SeccionVideos'
+import { perfil } from '../data/contenido'
+
+function InicioAdmin() {
+  return (
+    <>
+      <DashboardResumen nombre={perfil.nombre} />
+      <SeccionSolicitudes />
+    </>
+  )
+}
 
 function AdminPanel() {
   return (
@@ -16,14 +27,9 @@ function AdminPanel() {
       </SignedOut>
 
       <SignedIn>
-        <div style={{ borderBottom: '1px solid var(--color-sage-medio)' }}>
-          <div className="contenedor" style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.75rem 0' }}>
-            <UserButton afterSignOutUrl="/" />
-          </div>
-        </div>
         <AdminLayout>
           <Routes>
-            <Route index element={<SeccionSolicitudes />} />
+            <Route index element={<InicioAdmin />} />
             <Route path="agenda" element={<SeccionAgenda />} />
             <Route path="formulario" element={<SeccionFormulario />} />
             <Route path="videos" element={<SeccionVideos />} />

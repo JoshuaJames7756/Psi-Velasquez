@@ -42,35 +42,37 @@ function SeccionFormulario() {
 
   return (
     <div>
-      <h1>Formulario de admisión</h1>
-      <p style={{ marginBottom: '1.5rem' }}>
+      <h2 style={{ fontFamily: 'var(--font-sans-cuerpo)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--admin-texto)' }}>
+        Formulario de admisión
+      </h2>
+      <p style={{ marginBottom: '1.5rem', color: 'var(--admin-texto-secundario)', fontSize: '0.9rem' }}>
         Estas son las preguntas adicionales que verán tus pacientes al reservar una cita
         (además de nombre, teléfono, email y motivo). Agrega las que necesites.
       </p>
 
       <form
         onSubmit={handleCrear}
-        style={{ background: 'var(--color-fondo-crema)', padding: '1.25rem', borderRadius: 'var(--radius-md)', marginBottom: '2rem' }}
+        style={{ background: 'var(--admin-card-bg)', border: '1px solid var(--admin-border)', padding: '1.25rem', borderRadius: '14px', marginBottom: '2rem' }}
       >
         <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>Pregunta</label>
+          <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem' }}>Pregunta</label>
           <input
             type="text"
             required
             placeholder="Ej. ¿Has tenido terapia antes?"
             value={nueva.etiqueta}
             onChange={(e) => setNueva({ ...nueva, etiqueta: e.target.value })}
-            style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+            style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)' }}
           />
         </div>
 
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
           <div>
-            <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>Tipo de respuesta</label>
+            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem' }}>Tipo de respuesta</label>
             <select
               value={nueva.tipo}
               onChange={(e) => setNueva({ ...nueva, tipo: e.target.value })}
-              style={{ padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+              style={{ padding: '0.6rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)' }}
             >
               {TIPOS.map((t) => (
                 <option key={t.valor} value={t.valor}>{t.label}</option>
@@ -90,7 +92,7 @@ function SeccionFormulario() {
 
         {nueva.tipo === 'seleccion' && (
           <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem' }}>
               Opciones (separadas por coma)
             </label>
             <input
@@ -98,7 +100,7 @@ function SeccionFormulario() {
               placeholder="Ej. Ansiedad, Depresión, Estrés"
               value={nueva.opciones}
               onChange={(e) => setNueva({ ...nueva, opciones: e.target.value })}
-              style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+              style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)' }}
             />
           </div>
         )}
@@ -108,10 +110,10 @@ function SeccionFormulario() {
         </button>
       </form>
 
-      <h2 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Preguntas activas</h2>
+      <h3 style={{ fontFamily: 'var(--font-sans-cuerpo)', fontSize: '1rem', fontWeight: 600, color: 'var(--admin-texto)', marginBottom: '1rem' }}>Preguntas activas</h3>
       {cargando && <p>Cargando…</p>}
       {!cargando && preguntas.length === 0 && (
-        <p style={{ color: 'var(--color-texto-secundario)' }}>Aún no has agregado preguntas.</p>
+        <p style={{ color: 'var(--admin-texto-secundario)' }}>Aún no has agregado preguntas.</p>
       )}
 
       {preguntas.map((p) => (
@@ -122,20 +124,20 @@ function SeccionFormulario() {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: '0.75rem 1rem',
-            border: '1px solid var(--color-sage-medio)',
-            borderRadius: 'var(--radius-sm)',
+            border: '1px solid var(--admin-border)',
+            borderRadius: '8px',
             marginBottom: '0.5rem',
           }}
         >
           <div>
             <p>{p.etiqueta}{p.obligatorio && ' *'}</p>
-            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-texto-secundario)' }}>
+            <p style={{ fontSize: '0.85rem', color: 'var(--admin-texto-secundario)' }}>
               {TIPOS.find((t) => t.valor === p.tipo)?.label}
             </p>
           </div>
           <button
             onClick={() => desactivarPregunta(p.id)}
-            style={{ fontSize: 'var(--fs-small)', color: 'var(--color-error)', textDecoration: 'underline' }}
+            style={{ fontSize: '0.85rem', color: 'var(--color-error)', textDecoration: 'underline' }}
           >
             Quitar
           </button>

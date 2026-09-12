@@ -21,8 +21,10 @@ function SeccionAgenda() {
 
   return (
     <div>
-      <h1>Agenda y bloqueos</h1>
-      <p style={{ marginBottom: '1.5rem' }}>
+      <h2 style={{ fontFamily: 'var(--font-sans-cuerpo)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--admin-texto)' }}>
+        Agenda y bloqueos
+      </h2>
+      <p style={{ marginBottom: '1.5rem', color: 'var(--admin-texto-secundario)', fontSize: '0.9rem' }}>
         Bloquea días completos en los que no atenderás (vacaciones, imprevistos). Esos días
         no aparecerán como disponibles en el sitio.
       </p>
@@ -34,30 +36,31 @@ function SeccionAgenda() {
           gap: '0.75rem',
           alignItems: 'flex-end',
           flexWrap: 'wrap',
-          background: 'var(--color-fondo-crema)',
-          padding: '1rem',
-          borderRadius: 'var(--radius-md)',
+          background: 'var(--admin-card-bg)',
+          border: '1px solid var(--admin-border)',
+          padding: '1.25rem',
+          borderRadius: '14px',
           marginBottom: '1.5rem',
         }}
       >
         <div>
-          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>Fecha</label>
+          <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--admin-texto-secundario)', marginBottom: '0.4rem' }}>Fecha</label>
           <input
             type="date"
             required
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
-            style={{ padding: '0.5rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+            style={{ padding: '0.5rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)', background: 'var(--admin-bg)', color: 'var(--admin-texto)' }}
           />
         </div>
         <div style={{ flex: 1, minWidth: 180 }}>
-          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>Motivo (opcional)</label>
+          <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--admin-texto-secundario)', marginBottom: '0.4rem' }}>Motivo (opcional)</label>
           <input
             type="text"
             placeholder="Ej. Vacaciones"
             value={motivo}
             onChange={(e) => setMotivo(e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+            style={{ width: '100%', padding: '0.5rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)', background: 'var(--admin-bg)', color: 'var(--admin-texto)' }}
           />
         </div>
         <button type="submit" disabled={guardando} className="btn btn-primario" style={{ padding: '0.55rem 1.2rem' }}>
@@ -65,9 +68,9 @@ function SeccionAgenda() {
         </button>
       </form>
 
-      {cargando && <p>Cargando…</p>}
+      {cargando && <p style={{ color: 'var(--admin-texto-secundario)' }}>Cargando…</p>}
       {!cargando && bloqueos.length === 0 && (
-        <p style={{ color: 'var(--color-texto-secundario)' }}>No tienes días bloqueados próximamente.</p>
+        <p style={{ color: 'var(--admin-texto-secundario)' }}>No tienes días bloqueados próximamente.</p>
       )}
 
       {bloqueos.map((b) => (
@@ -77,19 +80,20 @@ function SeccionAgenda() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '0.75rem 1rem',
-            border: '1px solid var(--color-sage-medio)',
-            borderRadius: 'var(--radius-sm)',
+            padding: '0.85rem 1.1rem',
+            background: 'var(--admin-card-bg)',
+            border: '1px solid var(--admin-border)',
+            borderRadius: '10px',
             marginBottom: '0.5rem',
           }}
         >
-          <span>
+          <span style={{ color: 'var(--admin-texto)', fontSize: '0.9rem' }}>
             <strong>{b.fecha}</strong>
             {b.motivo && ` — ${b.motivo}`}
           </span>
           <button
             onClick={() => quitarBloqueo(b.id)}
-            style={{ fontSize: 'var(--fs-small)', color: 'var(--color-error)', textDecoration: 'underline' }}
+            style={{ fontSize: '0.85rem', color: 'var(--color-error)', fontWeight: 500 }}
           >
             Quitar bloqueo
           </button>

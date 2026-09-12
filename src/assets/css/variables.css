@@ -71,4 +71,15 @@
   /* --- Layout --- */
   --max-width-contenido: 1200px;
   --header-height: 80px;
+
+  /* --- Panel Admin: paleta tipo dashboard, deliberadamente distinta
+     al sitio público (sans-serif, tonos más neutros/directos, para que
+     Rebeca lea datos rápido en vez de "sentirse en la web de pacientes") --- */
+  --admin-bg: #F4F5F3;
+  --admin-card-bg: #FFFFFF;
+  --admin-border: #E4E6E2;
+  --admin-texto: #1F2320;
+  --admin-texto-secundario: #6B7069;
+  --admin-sidebar-bg: #1F2320;
+  --admin-sidebar-texto: #C9CCC7;
 }

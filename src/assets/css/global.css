@@ -461,16 +461,50 @@ button {
     gap: 2rem !important;
   }
 
-  /* Panel admin: nav lateral fija de 220px rompe en mobile.
-     Se colapsa a una barra horizontal con scroll arriba del contenido. */
+  /* Panel admin: la sidebar oscura fija de 240px rompe en mobile.
+     Se colapsa a una barra superior horizontal con scroll, en vez de
+     ocupar toda la altura lateral. */
   .admin-layout {
     grid-template-columns: 1fr !important;
   }
 
+  .admin-sidebar {
+    flex-direction: row !important;
+    align-items: center;
+    overflow-x: auto;
+    padding: 1rem !important;
+    gap: 1rem;
+  }
+
   .admin-nav-links {
     flex-direction: row !important;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
+    flex: none !important;
+  }
+
+  .admin-nav-label {
+    display: none;
+  }
+
+  .admin-nav-link {
+    padding: 0.6rem !important;
+  }
+
+  .admin-sidebar-label {
+    display: none;
+  }
+
+  .admin-user-block {
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-left: auto;
+  }
+
+  .admin-user-nombre {
+    display: none;
+  }
+
+  .admin-main {
+    padding: 1.5rem !important;
   }
 
   /* Spotlight de video: en mobile el video va arriba centrado y el

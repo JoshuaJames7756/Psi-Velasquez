@@ -54,45 +54,47 @@ function SeccionVideos() {
 
   return (
     <div>
-      <h1>Videos</h1>
-      <p style={{ marginBottom: '1.5rem' }}>
+      <h2 style={{ fontFamily: 'var(--font-sans-cuerpo)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--admin-texto)' }}>
+        Videos
+      </h2>
+      <p style={{ marginBottom: '1.5rem', color: 'var(--admin-texto-secundario)', fontSize: '0.9rem' }}>
         Pega el link de un Reel o publicación de Instagram para que aparezca en tu sitio.
         No necesitas tocar nada más.
       </p>
 
       {error && (
-        <p style={{ color: 'var(--color-error)', marginBottom: '1rem', padding: '0.75rem', background: '#fdf1ee', borderRadius: 'var(--radius-sm)' }}>
+        <p style={{ color: 'var(--color-error)', marginBottom: '1rem', padding: '0.75rem', background: '#fdf1ee', borderRadius: '8px' }}>
           {error}
         </p>
       )}
 
       <form
         onSubmit={handleAgregar}
-        style={{ background: 'var(--color-fondo-crema)', padding: '1.25rem', borderRadius: 'var(--radius-md)', marginBottom: '2rem' }}
+        style={{ background: 'var(--admin-card-bg)', border: '1px solid var(--admin-border)', padding: '1.25rem', borderRadius: '14px', marginBottom: '2rem' }}
       >
         <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>URL del video</label>
+          <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem' }}>URL del video</label>
           <input
             type="url"
             required
             placeholder="https://www.instagram.com/reel/..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+            style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)' }}
           />
         </div>
         <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>Título (opcional)</label>
+          <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem' }}>Título (opcional)</label>
           <input
             type="text"
             placeholder="Ej. 3 señales de ansiedad"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
-            style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+            style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)' }}
           />
         </div>
         <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', fontSize: 'var(--fs-small)', marginBottom: '0.4rem' }}>
+          <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem' }}>
             Imagen de miniatura (opcional)
           </label>
           <input
@@ -100,9 +102,9 @@ function SeccionVideos() {
             placeholder="https://..."
             value={miniaturaUrl}
             onChange={(e) => setMiniaturaUrl(e.target.value)}
-            style={{ width: '100%', padding: '0.6rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid var(--color-sage-medio)' }}
+            style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1.5px solid var(--admin-border)' }}
           />
-          <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-texto-secundario)', marginTop: '0.4rem' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--admin-texto-secundario)', marginTop: '0.4rem' }}>
             Instagram ya no permite tomar la miniatura automáticamente. Si quieres una
             imagen de portada, toma una captura de pantalla del video, súbela a{' '}
             <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
@@ -119,24 +121,24 @@ function SeccionVideos() {
 
       {cargando && <p>Cargando…</p>}
       {!cargando && lista.length === 0 && (
-        <p style={{ color: 'var(--color-texto-secundario)' }}>Aún no has agregado videos.</p>
+        <p style={{ color: 'var(--admin-texto-secundario)' }}>Aún no has agregado videos.</p>
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
         {lista.map((v) => (
-          <div key={v.id} style={{ border: '1px solid var(--color-sage-medio)', borderRadius: 'var(--radius-sm)', padding: '0.75rem' }}>
+          <div key={v.id} style={{ background: 'var(--admin-card-bg)', border: '1px solid var(--admin-border)', borderRadius: '10px', padding: '0.75rem' }}>
             {v.miniatura_url && (
               <img
                 src={v.miniatura_url}
                 alt=""
-                style={{ width: '100%', aspectRatio: '9/16', objectFit: 'cover', borderRadius: 'var(--radius-sm)', marginBottom: '0.5rem' }}
+                style={{ width: '100%', aspectRatio: '9/16', objectFit: 'cover', borderRadius: '8px', marginBottom: '0.5rem' }}
               />
             )}
-            <p style={{ fontSize: 'var(--fs-small)', fontWeight: 600, textTransform: 'capitalize' }}>{v.plataforma}</p>
-            <p style={{ fontSize: 'var(--fs-small)', marginBottom: '0.5rem', wordBreak: 'break-all' }}>{v.titulo || v.url}</p>
+            <p style={{ fontSize: '0.85rem', fontWeight: 600, textTransform: 'capitalize' }}>{v.plataforma}</p>
+            <p style={{ fontSize: '0.85rem', marginBottom: '0.5rem', wordBreak: 'break-all' }}>{v.titulo || v.url}</p>
             <button
               onClick={() => handleEliminar(v.id)}
-              style={{ fontSize: 'var(--fs-small)', color: 'var(--color-error)', textDecoration: 'underline' }}
+              style={{ fontSize: '0.85rem', color: 'var(--color-error)', textDecoration: 'underline' }}
             >
               Quitar
             </button>

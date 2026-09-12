@@ -14,19 +14,34 @@ function SeccionSolicitudes() {
 
   return (
     <div>
-      <h1>Solicitudes de cita</h1>
+      <h2 style={{ fontFamily: 'var(--font-sans-cuerpo)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--admin-texto)' }}>
+        Solicitudes de cita
+      </h2>
 
-      <div style={{ display: 'flex', gap: '0.5rem', margin: '1.5rem 0' }}>
+      <div
+        style={{
+          display: 'inline-flex',
+          gap: '0.25rem',
+          margin: '1.25rem 0',
+          background: 'var(--admin-card-bg)',
+          border: '1px solid var(--admin-border)',
+          borderRadius: '10px',
+          padding: '0.25rem',
+        }}
+      >
         {TABS.map((t) => (
           <button
             key={t.valor}
             onClick={() => setTab(t.valor)}
             style={{
-              padding: '0.5rem 1rem',
-              borderRadius: 'var(--radius-sm)',
-              background: tab === t.valor ? 'var(--color-texto-principal)' : 'var(--color-sage-medio)',
-              color: tab === t.valor ? 'var(--color-fondo-crema)' : 'var(--color-texto-principal)',
-              fontSize: 'var(--fs-small)',
+              padding: '0.45rem 1rem',
+              borderRadius: '7px',
+              background: tab === t.valor ? 'var(--admin-sidebar-bg)' : 'transparent',
+              color: tab === t.valor ? '#FFFFFF' : 'var(--admin-texto-secundario)',
+              fontFamily: 'var(--font-sans-cuerpo)',
+              fontSize: '0.85rem',
+              fontWeight: 500,
+              transition: 'var(--transition-rapida)',
             }}
           >
             {t.label}
@@ -34,10 +49,10 @@ function SeccionSolicitudes() {
         ))}
       </div>
 
-      {cargando && <p>Cargando solicitudes…</p>}
+      {cargando && <p style={{ color: 'var(--admin-texto-secundario)' }}>Cargando solicitudes…</p>}
 
       {!cargando && citas.length === 0 && (
-        <p style={{ color: 'var(--color-texto-secundario)' }}>No hay solicitudes en esta categoría.</p>
+        <p style={{ color: 'var(--admin-texto-secundario)' }}>No hay solicitudes en esta categoría.</p>
       )}
 
       {citas.map((cita) => (
