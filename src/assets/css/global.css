@@ -376,6 +376,15 @@ button {
   color: var(--color-cta-hover);
 }
 
+.card-formacion {
+  transition: transform 0.35s var(--ease-expo), box-shadow 0.35s ease;
+}
+
+.card-formacion:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-media);
+}
+
 /* --- CANALES DE CONTACTO --- */
 .canal-contacto:hover {
   transform: translateY(-4px);
