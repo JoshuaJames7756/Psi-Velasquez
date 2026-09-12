@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useVideos } from '../hooks/useVideos'
 import VideoCard from '../components/ui/VideoCard'
 import VideoModal from '../components/ui/VideoModal'
+import VideoSpotlight from '../components/ui/VideoSpotlight'
 import FadeInSection from '../components/ui/FadeInSection'
 import BlobDecorativo from '../components/ui/BlobDecorativo'
 import { useSEO } from '../hooks/useSEO'
@@ -13,9 +14,10 @@ function Videos() {
   const { videos, cargando } = useVideos()
   const [videoActivo, setVideoActivo] = useState(null)
 
-  // Con pocos videos, centrarlos y agrandarlos un poco evita que se vean
-  // perdidos en el ancho completo de la página.
-  const pocosVideos = videos.length > 0 && videos.length <= 2
+  // Con pocos videos (1-2), el spotlight (video grande + texto al lado)
+  // se ve mucho mejor que un grid de tarjetas chicas perdidas. Con 3+,
+  // el grid normal ya se ve lleno y con buena proporción.
+  const usarSpotlight = videos.length > 0 && videos.length <= 2
 
   return (
     <div className="seccion contenedor" style={{ position: 'relative' }}>
@@ -41,23 +43,29 @@ function Videos() {
         </p>
       )}
 
-      <div
-        className="grid-videos"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: pocosVideos
-            ? `repeat(${videos.length}, 300px)`
-            : `repeat(${Math.min(videos.length || 1, 4)}, 280px)`,
-          justifyContent: 'center',
-          gap: '2rem',
-        }}
-      >
-        {videos.map((v, i) => (
-          <FadeInSection key={v.id} delay={i * 60}>
-            <VideoCard video={v} onPlay={setVideoActivo} />
-          </FadeInSection>
-        ))}
-      </div>
+      {!cargando && usarSpotlight && (
+        <FadeInSection as="div" style={{ marginTop: '2rem' }}>
+          <VideoSpotlight videos={videos} onPlay={setVideoActivo} mostrarTexto={false} mostrarCTA={false} />
+        </FadeInSection>
+      )}
+
+      {!cargando && !usarSpotlight && videos.length > 0 && (
+        <div
+          className="grid-videos"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${Math.min(videos.length, 4)}, 280px)`,
+            justifyContent: 'center',
+            gap: '2rem',
+          }}
+        >
+          {videos.map((v, i) => (
+            <FadeInSection key={v.id} delay={i * 60}>
+              <VideoCard video={v} onPlay={setVideoActivo} />
+            </FadeInSection>
+          ))}
+        </div>
+      )}
 
       <VideoModal video={videoActivo} onClose={() => setVideoActivo(null)} />
     </div>

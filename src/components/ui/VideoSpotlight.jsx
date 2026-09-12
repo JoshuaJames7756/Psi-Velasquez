@@ -6,17 +6,20 @@ import Icono from './Icono'
  * en la sección, acompañados de texto y CTA al lado — en vez de un grid
  * de tarjetas chicas que se ve perdido cuando hay poco contenido.
  */
-function VideoSpotlight({ videos, onPlay }) {
+function VideoSpotlight({ videos, onPlay, mostrarTexto = true, mostrarCTA = true }) {
   const esUno = videos.length === 1
+  const hayColumnaTexto = mostrarTexto || mostrarCTA
+  const anchoVideo = esUno ? (hayColumnaTexto ? 300 : 340) : (hayColumnaTexto ? 220 : 260)
 
   return (
     <div
-      className="grid-2-col video-spotlight-grid"
+      className={hayColumnaTexto ? 'grid-2-col video-spotlight-grid' : ''}
       style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: hayColumnaTexto ? '1fr 1fr' : '1fr',
         gap: '3rem',
         alignItems: 'center',
+        justifyItems: 'center',
         position: 'relative',
       }}
     >
@@ -44,7 +47,7 @@ function VideoSpotlight({ videos, onPlay }) {
             className="video-spotlight-card"
             style={{
               position: 'relative',
-              width: esUno ? 300 : 220,
+              width: anchoVideo,
               aspectRatio: '9/16',
               borderRadius: 'var(--radius-lg)',
               overflow: 'hidden',
@@ -102,20 +105,28 @@ function VideoSpotlight({ videos, onPlay }) {
         ))}
       </div>
 
-      {/* Texto acompañante */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <Icono nombre="instagram" size={28} style={{ color: 'var(--color-cta)', marginBottom: '1rem' }} />
-        <h3 style={{ fontSize: 'var(--fs-h2)' }}>
-          {esUno ? 'Un vistazo a lo que comparto' : 'Últimos videos compartidos'}
-        </h3>
-        <p style={{ marginTop: '0.75rem', maxWidth: 340 }}>
-          Reflexiones cortas sobre salud mental, directo desde Instagram. Voy a ir sumando
-          más contenido con el tiempo.
-        </p>
-        <a href="/videos" className="btn btn-outline" style={{ marginTop: '1.5rem', display: 'inline-flex' }}>
-          Ver más en Instagram
-        </a>
-      </div>
+      {/* Texto acompañante — solo se renderiza si hay algo que mostrar */}
+      {hayColumnaTexto && (
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <Icono nombre="instagram" size={28} style={{ color: 'var(--color-cta)', marginBottom: '1rem' }} />
+          {mostrarTexto && (
+            <>
+              <h3 style={{ fontSize: 'var(--fs-h2)' }}>
+                {esUno ? 'Un vistazo a lo que comparto' : 'Últimos videos compartidos'}
+              </h3>
+              <p style={{ marginTop: '0.75rem', maxWidth: 340 }}>
+                Reflexiones cortas sobre salud mental, directo desde Instagram. Voy a ir
+                sumando más contenido con el tiempo.
+              </p>
+            </>
+          )}
+          {mostrarCTA && (
+            <a href="/videos" className="btn btn-outline" style={{ marginTop: '1.5rem', display: 'inline-flex' }}>
+              Ver más en Instagram
+            </a>
+          )}
+        </div>
+      )}
     </div>
   )
 }
