@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { especialidades, servicios, faq, seo, seoEspecialidad } from '../data/contenido'
 import FadeInSection from '../components/ui/FadeInSection'
@@ -8,19 +9,88 @@ import DivisorCurva from '../components/ui/DivisorCurva'
 import { useSEO } from '../hooks/useSEO'
 
 function SeccionFAQ() {
+  const [abierto, setAbierto] = useState(0) // primera pregunta abierta por defecto
+
   return (
-    <div style={{ background: 'var(--color-fondo-crema)', borderTop: '1px solid var(--color-sage-medio)' }}>
-      <div className="contenedor seccion">
+    <div style={{ background: 'var(--color-fondo-crema)', position: 'relative', overflow: 'hidden' }}>
+      <BlobDecorativo
+        variante={2}
+        color="var(--color-sage-suave)"
+        opacity={0.3}
+        style={{ width: 360, height: 360, top: '-100px', right: '-160px', zIndex: 0 }}
+      />
+      <div className="contenedor seccion" style={{ maxWidth: 680, position: 'relative', zIndex: 1 }}>
         <FadeInSection as="div" style={{ marginBottom: '2rem' }}>
           <h2>Preguntas frecuentes</h2>
         </FadeInSection>
-        <div style={{ display: 'grid', gap: '1.5rem' }}>
-          {faq.map((item, i) => (
-            <FadeInSection key={i} as="div">
-              <h3 style={{ fontSize: 'var(--fs-h3)' }}>{item.pregunta}</h3>
-              <p style={{ marginTop: '0.5rem' }}>{item.respuesta}</p>
-            </FadeInSection>
-          ))}
+
+        <div style={{ display: 'grid', gap: '0.9rem' }}>
+          {faq.map((item, i) => {
+            const estaAbierto = abierto === i
+            return (
+              <FadeInSection
+                key={i}
+                delay={i * 60}
+                style={{
+                  background: 'var(--color-blanco)',
+                  borderRadius: 'var(--radius-md)',
+                  border: '1px solid var(--color-card-border)',
+                  boxShadow: estaAbierto ? 'var(--shadow-media)' : 'var(--shadow-suave)',
+                  overflow: 'hidden',
+                  transition: 'var(--transition-suave)',
+                }}
+              >
+                <button
+                  onClick={() => setAbierto(estaAbierto ? -1 : i)}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    padding: '1.1rem 1.4rem',
+                    textAlign: 'left',
+                  }}
+                  aria-expanded={estaAbierto}
+                >
+                  <h3 style={{ fontSize: 'var(--fs-h3)', color: 'var(--color-texto-principal)' }}>
+                    {item.pregunta}
+                  </h3>
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      width: 28,
+                      height: 28,
+                      borderRadius: '50%',
+                      background: estaAbierto ? 'var(--color-cta)' : 'var(--color-sage-medio)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transform: estaAbierto ? 'rotate(45deg)' : 'rotate(0deg)',
+                      transition: 'var(--transition-suave)',
+                    }}
+                  >
+                    <Icono
+                      nombre="cerrar"
+                      size={14}
+                      style={{ color: estaAbierto ? 'var(--color-cta-texto)' : 'var(--color-texto-principal)' }}
+                    />
+                  </span>
+                </button>
+
+                <div
+                  style={{
+                    maxHeight: estaAbierto ? 200 : 0,
+                    opacity: estaAbierto ? 1 : 0,
+                    transition: 'max-height 0.4s var(--ease-expo), opacity 0.3s ease',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <p style={{ padding: '0 1.4rem 1.2rem' }}>{item.respuesta}</p>
+                </div>
+              </FadeInSection>
+            )
+          })}
         </div>
       </div>
     </div>
