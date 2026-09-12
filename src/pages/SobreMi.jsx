@@ -91,7 +91,8 @@ function SobreMi() {
       </section>
 
       {/* CTA de cierre */}
-      <section className="contenedor seccion" style={{ textAlign: 'center' }}>
+      <DivisorCurva colorSuperior="var(--color-fondo-crema)" invertido />
+      <section className="contenedor seccion" style={{ textAlign: 'center', paddingTop: 0 }}>
         <h2>¿Lista para conocerla en persona?</h2>
         <p style={{ maxWidth: 480, margin: '1rem auto 2rem' }}>
           Reserva tu cita y demos juntos el primer paso hacia un espacio de acompañamiento

@@ -2,10 +2,19 @@ import { Link } from 'react-router-dom'
 import { contacto, perfil } from '../../data/contenido'
 import Icono from '../ui/Icono'
 import BlobDecorativo from '../ui/BlobDecorativo'
+import DivisorCurva from '../ui/DivisorCurva'
 
-function Footer() {
+/**
+ * `colorAnterior` es el fondo de lo que queda justo arriba del Footer en
+ * cada página — casi siempre crema, salvo Inicio, que termina en el color
+ * CTA (sage). Se pasa explícitamente para que la curva de entrada del
+ * Footer siempre coincida con el color real que tiene encima.
+ */
+function Footer({ colorAnterior = 'var(--color-fondo-crema)' }) {
   return (
-    <footer style={{ background: 'var(--color-texto-principal)', color: 'var(--color-fondo-crema)', marginTop: 'var(--space-xl)', position: 'relative', overflow: 'hidden' }}>
+    <div>
+      <DivisorCurva colorSuperior={colorAnterior} />
+      <footer style={{ background: 'var(--color-texto-principal)', color: 'var(--color-fondo-crema)', position: 'relative', overflow: 'hidden' }}>
       <BlobDecorativo
         variante={1}
         color="var(--color-sage-suave)"
@@ -85,6 +94,7 @@ function Footer() {
         </div>
       </div>
     </footer>
+    </div>
   )
 }
 

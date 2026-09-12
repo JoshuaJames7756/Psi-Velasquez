@@ -45,6 +45,7 @@ function PorQueTerapia() {
           </div>
         </FadeInSection>
       </section>
+      <DivisorCurva colorSuperior="var(--color-fondo-crema)" invertido />
     </>
   )
 }

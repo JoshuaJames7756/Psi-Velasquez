@@ -416,6 +416,17 @@ button {
 }
 
 @media (max-width: 768px) {
+  /* Menos aire vertical entre secciones en mobile — el mismo padding
+     que se ve bien en desktop se siente como espacio muerto en pantallas
+     angostas, donde el usuario ya scrollea mucho más. */
+  .seccion {
+    padding: 2.5rem 0 !important;
+  }
+
+  .seccion-hero {
+    padding-top: 2rem !important;
+  }
+
   /* Forzar 1 sola columna ordenada en pantallas móviles */
   .hero-grid,
   .grid-2-col {

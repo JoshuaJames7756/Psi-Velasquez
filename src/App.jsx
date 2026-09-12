@@ -19,6 +19,11 @@ function App() {
   // identidad visual de las páginas para pacientes.
   const esAdmin = pathname.startsWith('/admin')
 
+  // Solo Inicio termina en el color CTA justo antes del Footer (CtaFinal);
+  // el resto de páginas terminan en el fondo crema estándar. El Footer
+  // necesita saber esto para que su curva de entrada coincida.
+  const colorAntesDelFooter = pathname === '/' ? 'var(--color-cta)' : 'var(--color-fondo-crema)'
+
   return (
     <>
       <ScrollToTop />
@@ -37,7 +42,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      {!esAdmin && <Footer />}
+      {!esAdmin && <Footer colorAnterior={colorAntesDelFooter} />}
     </>
   )
 }
