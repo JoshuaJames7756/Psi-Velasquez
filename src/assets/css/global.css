@@ -297,6 +297,13 @@ button {
   margin-top: 2.5rem;
 }
 
+/* Dentro del carrusel de Inicio, cada "página" trae solo 2 cards —
+   se fuerzan 2 columnas para que no quede un hueco vacío de la 3ra. */
+.carrusel-especialidades-track .grid-especialidades {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 0;
+}
+
 .grid-especialidades > * {
   width: 100%;
   height: 100%;
