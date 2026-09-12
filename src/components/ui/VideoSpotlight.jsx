@@ -21,6 +21,8 @@ function VideoSpotlight({ videos, onPlay, mostrarTexto = true, mostrarCTA = true
         alignItems: 'center',
         justifyItems: 'center',
         position: 'relative',
+        overflow: 'hidden',
+        width: '100%',
       }}
     >
       <BlobDecorativo
@@ -32,12 +34,15 @@ function VideoSpotlight({ videos, onPlay, mostrarTexto = true, mostrarCTA = true
 
       {/* Video(s) grande(s) */}
       <div
+        className="video-spotlight-videos"
         style={{
           display: 'flex',
           justifyContent: 'center',
+          flexWrap: 'wrap',
           gap: '1.5rem',
           position: 'relative',
           zIndex: 1,
+          maxWidth: '100%',
         }}
       >
         {videos.map((v) => (

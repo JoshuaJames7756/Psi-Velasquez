@@ -1,5 +1,6 @@
 import FadeInSection from '../ui/FadeInSection'
 import BlobDecorativo from '../ui/BlobDecorativo'
+import { useCarrusel } from '../../hooks/useCarrusel'
 
 // ⚠️ MOCK — TESTIMONIOS DE PRUEBA, NO SON REALES.
 // Solo están aquí para ver cómo se vería la sección visualmente.
@@ -21,7 +22,60 @@ const testimonios = [
   },
 ]
 
+function TarjetaTestimonio({ t }) {
+  return (
+    <blockquote
+      style={{
+        background: 'var(--color-blanco)',
+        padding: '1.75rem',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: 'var(--shadow-suave)',
+        border: '1px solid var(--color-card-border)',
+        position: 'relative',
+        height: '100%',
+      }}
+    >
+      <span
+        style={{
+          fontFamily: 'var(--font-serif-titulos)',
+          fontSize: '3rem',
+          color: 'var(--color-sage-suave)',
+          lineHeight: 0.5,
+          display: 'block',
+          marginBottom: '0.75rem',
+        }}
+        aria-hidden="true"
+      >
+        "
+      </span>
+      <p style={{ fontStyle: 'italic', color: 'var(--color-texto-principal)' }}>{t.texto}</p>
+      <footer style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <span
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            background: 'var(--color-sage-medio)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            color: 'var(--color-texto-principal)',
+            flexShrink: 0,
+          }}
+        >
+          {t.autor.charAt(0)}
+        </span>
+        <span style={{ fontSize: 'var(--fs-small)', color: 'var(--color-texto-secundario)' }}>{t.autor}</span>
+      </footer>
+    </blockquote>
+  )
+}
+
 function Testimonios() {
+  const { indice, irA, pausar, reanudar } = useCarrusel(testimonios.length, 5000)
+
   if (testimonios.length === 0) {
     // Mientras no haya testimonios reales, la sección simplemente no se
     // renderiza — evita espacio vacío o contenido de relleno poco ético
@@ -40,57 +94,47 @@ function Testimonios() {
       <FadeInSection as="div" style={{ textAlign: 'center', marginBottom: 'var(--space-md)' }}>
         <h2>Lo que dicen quienes ya dieron el paso</h2>
       </FadeInSection>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-        {testimonios.map((t, i) => (
-          <FadeInSection
-            key={i}
-            as="blockquote"
-            delay={i * 80}
+
+      <div
+        onMouseEnter={pausar}
+        onMouseLeave={reanudar}
+        style={{ maxWidth: 640, margin: '0 auto', position: 'relative' }}
+      >
+        <div style={{ overflow: 'hidden' }}>
+          <div
             style={{
-              background: 'var(--color-blanco)',
-              padding: '1.75rem',
-              borderRadius: 'var(--radius-lg)',
-              boxShadow: 'var(--shadow-suave)',
-              border: '1px solid var(--color-card-border)',
-              position: 'relative',
+              display: 'flex',
+              transform: `translateX(-${indice * 100}%)`,
+              transition: 'transform 0.6s var(--ease-expo)',
             }}
           >
-            <span
-              style={{
-                fontFamily: 'var(--font-serif-titulos)',
-                fontSize: '3rem',
-                color: 'var(--color-sage-suave)',
-                lineHeight: 0.5,
-                display: 'block',
-                marginBottom: '0.75rem',
-              }}
-              aria-hidden="true"
-            >
-              "
-            </span>
-            <p style={{ fontStyle: 'italic', color: 'var(--color-texto-principal)' }}>{t.texto}</p>
-            <footer style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <span
+            {testimonios.map((t, i) => (
+              <div key={i} style={{ minWidth: '100%', padding: '0 0.5rem' }}>
+                <TarjetaTestimonio t={t} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Indicadores (dots) — navegación manual, también pausan el auto-avance */}
+        {testimonios.length > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1.5rem' }}>
+            {testimonios.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => irA(i)}
+                aria-label={`Ver testimonio ${i + 1}`}
                 style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: '50%',
-                  background: 'var(--color-sage-medio)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  color: 'var(--color-texto-principal)',
-                  flexShrink: 0,
+                  width: i === indice ? 22 : 8,
+                  height: 8,
+                  borderRadius: '4px',
+                  background: i === indice ? 'var(--color-cta)' : 'var(--color-sage-medio)',
+                  transition: 'var(--transition-rapida)',
                 }}
-              >
-                {t.autor.charAt(0)}
-              </span>
-              <span style={{ fontSize: 'var(--fs-small)', color: 'var(--color-texto-secundario)' }}>{t.autor}</span>
-            </footer>
-          </FadeInSection>
-        ))}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

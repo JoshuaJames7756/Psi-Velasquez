@@ -529,6 +529,13 @@ button {
     text-align: center;
     gap: 2rem !important;
   }
+
+  /* Con 2 videos, el ancho fijo de cada card (220px) puede sumar más
+     que el ancho disponible en pantallas angostas — se reduce y se
+     permite que quiebren a una segunda fila si hace falta. */
+  .video-spotlight-videos button {
+    width: min(150px, 40vw) !important;
+  }
 }
 
 /* Evita overflow horizontal general: cualquier elemento (imagen, iframe)
