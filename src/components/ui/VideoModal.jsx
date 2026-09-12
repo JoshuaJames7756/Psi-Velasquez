@@ -1,21 +1,23 @@
 import { useEffect } from 'react'
 
 /**
- * Carga el script embed.js de Instagram una sola vez por sesión, y le pide
- * reprocesar el DOM cuando aparece un nuevo embed (por ejemplo, al abrir
- * el modal con un video distinto).
+ * Carga el script embed.js de Instagram o TikTok una sola vez por sesión,
+ * y le pide reprocesar el DOM cuando aparece un nuevo embed (por ejemplo,
+ * al abrir el modal con un video distinto).
  */
-function cargarScriptEmbedInstagram() {
-  const idScript = 'instagram-embed-script'
+function cargarScriptEmbed(plataforma) {
+  const idScript = plataforma === 'tiktok' ? 'tiktok-embed-script' : 'instagram-embed-script'
 
   if (document.getElementById(idScript)) {
-    if (window.instgrm) window.instgrm.Embeds.process()
+    // Instagram necesita que se le pida explícitamente reprocesar el DOM;
+    // TikTok reprocesa solo vía su propio observer interno.
+    if (plataforma === 'instagram' && window.instgrm) window.instgrm.Embeds.process()
     return
   }
 
   const script = document.createElement('script')
   script.id = idScript
-  script.src = 'https://www.instagram.com/embed.js'
+  script.src = plataforma === 'tiktok' ? 'https://www.tiktok.com/embed.js' : 'https://www.instagram.com/embed.js'
   script.async = true
   document.body.appendChild(script)
 }
@@ -28,7 +30,7 @@ function VideoModal({ video, onClose }) {
   }, [onClose])
 
   useEffect(() => {
-    if (video) cargarScriptEmbedInstagram()
+    if (video) cargarScriptEmbed(video.plataforma)
   }, [video])
 
   if (!video) return null
@@ -71,12 +73,24 @@ function VideoModal({ video, onClose }) {
             </p>
           )}
 
-          <blockquote
-            className="instagram-media"
-            data-instgrm-permalink={video.url}
-            data-instgrm-version="14"
-            style={{ margin: 0, width: '100%' }}
-          />
+          {video.plataforma === 'tiktok' ? (
+            <blockquote
+              className="tiktok-embed"
+              cite={video.url}
+              style={{ margin: '0 auto', maxWidth: '100%' }}
+            >
+              <a href={video.url} target="_blank" rel="noopener noreferrer">
+                {video.titulo || 'Ver en TikTok'}
+              </a>
+            </blockquote>
+          ) : (
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink={video.url}
+              data-instgrm-version="14"
+              style={{ margin: 0, width: '100%' }}
+            />
+          )}
         </div>
       </div>
     </div>

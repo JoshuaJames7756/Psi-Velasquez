@@ -2,6 +2,9 @@ import { useParams, Link } from 'react-router-dom'
 import { especialidades, servicios, faq, seo, seoEspecialidad } from '../data/contenido'
 import FadeInSection from '../components/ui/FadeInSection'
 import CardEspecialidad from '../components/ui/CardEspecialidad'
+import Icono from '../components/ui/Icono'
+import BlobDecorativo from '../components/ui/BlobDecorativo'
+import DivisorCurva from '../components/ui/DivisorCurva'
 import { useSEO } from '../hooks/useSEO'
 
 function SeccionFAQ() {
@@ -46,43 +49,124 @@ function VistaDetalle({ especialidad }) {
   useSEO(seoEspecialidad(especialidad))
 
   return (
-    <div className="seccion contenedor" style={{ maxWidth: 720 }}>
-      <Link to="/especialidades" style={{ fontSize: 'var(--fs-small)', textDecoration: 'underline' }}>
-        ← Todas las especialidades
-      </Link>
+    <div>
+      {/* Hero de la especialidad — ícono grande, blob, fondo con color propio */}
+      <section style={{ background: 'var(--color-terracota-suave)', position: 'relative', overflow: 'hidden' }}>
+        <BlobDecorativo
+          variante={1}
+          color="rgba(255,255,255,0.4)"
+          opacity={0.5}
+          style={{ width: 400, height: 400, top: '-140px', right: '-140px', zIndex: 0 }}
+        />
+        <div className="contenedor seccion" style={{ maxWidth: 720, position: 'relative', zIndex: 1 }}>
+          <Link to="/especialidades" style={{ fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+            ← Todas las especialidades
+          </Link>
 
-      <h1 style={{ marginTop: '1rem' }}>{especialidad.nombre}</h1>
+          <FadeInSection as="div" style={{ marginTop: '1.5rem' }}>
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: '18px',
+                background: 'var(--color-blanco)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'var(--shadow-media)',
+                marginBottom: '1.25rem',
+              }}
+            >
+              <Icono nombre={especialidad.id} size={30} style={{ color: 'var(--color-cta)' }} />
+            </div>
+            <h1>{especialidad.nombre}</h1>
+          </FadeInSection>
+        </div>
+      </section>
 
-      <FadeInSection as="section" style={{ marginTop: '2rem' }}>
-        <h2 style={{ fontSize: 'var(--fs-h3)' }}>¿Qué es?</h2>
-        <p style={{ marginTop: '0.75rem' }}>{especialidad.queEs}</p>
-      </FadeInSection>
+      <DivisorCurva colorSuperior="var(--color-fondo-crema)" />
 
-      {especialidad.sintomas && (
-        <FadeInSection as="section" style={{ marginTop: '2rem' }}>
-          <h2 style={{ fontSize: 'var(--fs-h3)' }}>Algunas señales comunes</h2>
-          <ul style={{ marginTop: '0.75rem', paddingLeft: '1.25rem' }}>
-            {especialidad.sintomas.map((s, i) => (
-              <li key={i} style={{ marginBottom: '0.5rem', color: 'var(--color-texto-secundario)' }}>
-                {s}
-              </li>
-            ))}
-          </ul>
+      <div className="contenedor seccion" style={{ maxWidth: 720, position: 'relative' }}>
+        <BlobDecorativo
+          variante={3}
+          color="var(--color-sage-suave)"
+          opacity={0.22}
+          style={{ width: 320, height: 320, bottom: '-60px', left: '-160px', zIndex: -1 }}
+        />
+
+        <FadeInSection as="section">
+          <h2 style={{ fontSize: 'var(--fs-h3)' }}>¿Qué es?</h2>
+          <p style={{ marginTop: '0.75rem' }}>{especialidad.queEs}</p>
         </FadeInSection>
-      )}
 
-      <FadeInSection
-        as="section"
-        style={{ marginTop: '2rem', background: 'var(--color-sage-medio)', padding: '1.5rem', borderRadius: 'var(--radius-md)' }}
-      >
-        <h2 style={{ fontSize: 'var(--fs-h3)' }}>¿Cómo puede ayudar la terapia?</h2>
-        <p style={{ marginTop: '0.75rem' }}>{especialidad.comoAyuda}</p>
-      </FadeInSection>
+        {especialidad.sintomas && (
+          <FadeInSection as="section" style={{ marginTop: '2.5rem' }}>
+            <h2 style={{ fontSize: 'var(--fs-h3)', marginBottom: '1.25rem' }}>Algunas señales comunes</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+              {especialidad.sintomas.map((s, i) => (
+                <FadeInSection
+                  key={i}
+                  delay={i * 60}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '0.75rem',
+                    padding: '1rem',
+                    background: 'var(--color-blanco)',
+                    borderRadius: '12px',
+                    border: '1px solid var(--color-card-border)',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: '50%',
+                      background: 'var(--color-sage-medio)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      marginTop: '0.1rem',
+                    }}
+                  >
+                    <Icono nombre="check" size={14} style={{ color: 'var(--color-cta-hover)' }} />
+                  </div>
+                  <p style={{ color: 'var(--color-texto-secundario)', fontSize: '0.95rem' }}>{s}</p>
+                </FadeInSection>
+              ))}
+            </div>
+          </FadeInSection>
+        )}
 
-      <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
-        <Link to="/reservar-cita" className="btn btn-primario">
-          Reservar Cita
-        </Link>
+        <FadeInSection
+          as="section"
+          style={{
+            marginTop: '2.5rem',
+            background: 'var(--color-sage-medio)',
+            padding: '1.75rem',
+            borderRadius: 'var(--radius-lg)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          <BlobDecorativo
+            variante={2}
+            color="var(--color-terracota-suave)"
+            opacity={0.3}
+            style={{ width: 200, height: 200, bottom: '-80px', right: '-60px', zIndex: 0 }}
+          />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <h2 style={{ fontSize: 'var(--fs-h3)' }}>¿Cómo puede ayudar la terapia?</h2>
+            <p style={{ marginTop: '0.75rem' }}>{especialidad.comoAyuda}</p>
+          </div>
+        </FadeInSection>
+
+        <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
+          <Link to="/reservar-cita" className="btn btn-primario">
+            Reservar Cita
+          </Link>
+        </div>
       </div>
     </div>
   )

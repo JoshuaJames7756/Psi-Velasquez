@@ -10,6 +10,7 @@ const mapaSrc = `https://www.google.com/maps?q=${encodeURIComponent(direccionCom
 const canalesContacto = [
   { id: 'whatsapp', label: 'WhatsApp', href: contacto.whatsappUrl, icono: 'whatsapp' },
   { id: 'instagram', label: 'Instagram', href: contacto.instagramUrl, icono: 'instagram' },
+  { id: 'tiktok', label: 'TikTok', href: contacto.tiktokUrl, icono: 'tiktok' },
   { id: 'linkedin', label: 'LinkedIn', href: contacto.linkedinUrl, icono: 'linkedin' },
   { id: 'email', label: 'Email', href: contacto.email ? `mailto:${contacto.email}` : null, icono: 'email' },
 ]

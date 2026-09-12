@@ -89,6 +89,10 @@ const trazos = {
       <circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none" />
     </>
   ),
+  // TikTok (nota musical estilizada)
+  tiktok: (
+    <path d="M14 3v10.5a3 3 0 1 1-2.4-2.94V8.4A5.6 5.6 0 0 0 8 13.9 5.6 5.6 0 1 0 13.6 8.3V7.2a4.7 4.7 0 0 0 3.4 1.44V6.1A3.5 3.5 0 0 1 14 3Z" />
+  ),
   // LinkedIn (letra in estilizada)
   linkedin: (
     <>

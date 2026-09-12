@@ -31,7 +31,7 @@ function Videos() {
       <FadeInSection as="div">
         <h1>Contenido en video</h1>
         <p style={{ maxWidth: 500, marginBottom: '2rem' }}>
-          Reflexiones y tips sobre salud mental, directo desde Instagram.
+          Reflexiones y tips sobre salud mental, directo desde Instagram y TikTok.
         </p>
       </FadeInSection>
 

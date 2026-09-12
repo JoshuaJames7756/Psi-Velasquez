@@ -58,7 +58,8 @@ function SeccionVideos() {
         Videos
       </h2>
       <p style={{ marginBottom: '1.5rem', color: 'var(--admin-texto-secundario)', fontSize: '0.9rem' }}>
-        Pega el link de un Reel o publicación de Instagram para que aparezca en tu sitio.
+        Pega el link de un Reel de Instagram o un video de TikTok para que aparezca en tu
+        sitio.
         No necesitas tocar nada más.
       </p>
 

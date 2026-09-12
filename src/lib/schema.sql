@@ -60,7 +60,7 @@ CREATE TABLE bloqueos (
 CREATE TABLE videos (
   id SERIAL PRIMARY KEY,
   url VARCHAR(500) NOT NULL,
-  plataforma VARCHAR(20) NOT NULL,  -- 'instagram' por ahora
+  plataforma VARCHAR(20) NOT NULL,  -- 'instagram' | 'tiktok'
   titulo VARCHAR(200),
   miniatura_url VARCHAR(500),       -- Cloudinary, opcional (thumbnail manual si el embed no trae uno)
   orden INT DEFAULT 0,              -- para controlar el orden en el grid
