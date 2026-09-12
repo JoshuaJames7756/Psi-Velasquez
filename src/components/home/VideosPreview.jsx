@@ -12,6 +12,12 @@ function VideosPreview() {
   // sección vacía — evita mal aspecto antes de que Rebeca suba contenido.
   if (!cargando && videos.length === 0) return null
 
+  // El ancho del contenedor del grid se ajusta a la cantidad real de
+  // videos (hasta un máximo de 4 tarjetas de 280px + espaciado), así una
+  // sola tarjeta no se estira a ocupar todo el ancho disponible ni queda
+  // perdida en una pantalla ancha — el espacio se siente intencional.
+  const anchoGrid = Math.min(videos.length, 4) * 280 + (Math.min(videos.length, 4) - 1) * 32
+
   return (
     <section className="seccion contenedor">
       <FadeInSection as="div" style={{ textAlign: 'center', marginBottom: 'var(--space-md)' }}>
@@ -24,11 +30,14 @@ function VideosPreview() {
       ) : (
         <>
           <div
+            className="grid-videos"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 220px))',
+              gridTemplateColumns: `repeat(${Math.min(videos.length, 4)}, 280px)`,
               justifyContent: 'center',
-              gap: '1.5rem',
+              gap: '2rem',
+              maxWidth: anchoGrid,
+              margin: '0 auto',
             }}
           >
             {videos.map((v, i) => (

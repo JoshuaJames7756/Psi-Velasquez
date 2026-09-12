@@ -37,7 +37,17 @@ function Videos() {
         </p>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 220px))', justifyContent: 'center', gap: '1.5rem' }}>
+      <div
+        className="grid-videos"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Math.min(videos.length || 1, 4)}, 280px)`,
+          justifyContent: 'center',
+          gap: '2rem',
+          maxWidth: Math.min(videos.length || 1, 4) * 280 + (Math.min(videos.length || 1, 4) - 1) * 32,
+          margin: '0 auto',
+        }}
+      >
         {videos.map((v, i) => (
           <FadeInSection key={v.id} delay={i * 60}>
             <VideoCard video={v} onPlay={setVideoActivo} />

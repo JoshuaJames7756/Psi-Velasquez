@@ -408,6 +408,11 @@ button {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+
+  .grid-videos {
+    grid-template-columns: repeat(2, 280px) !important;
+    max-width: 592px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -421,6 +426,11 @@ button {
   .grid-especialidades {
     grid-template-columns: 1fr !important;
     gap: 1.25rem !important;
+  }
+
+  .grid-videos {
+    grid-template-columns: 1fr !important;
+    max-width: 280px !important;
   }
 
   /* Ajustar tarjetas para móvil */
