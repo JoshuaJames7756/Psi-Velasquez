@@ -13,6 +13,10 @@ function Videos() {
   const { videos, cargando } = useVideos()
   const [videoActivo, setVideoActivo] = useState(null)
 
+  // Con pocos videos, centrarlos y agrandarlos un poco evita que se vean
+  // perdidos en el ancho completo de la página.
+  const pocosVideos = videos.length > 0 && videos.length <= 2
+
   return (
     <div className="seccion contenedor" style={{ position: 'relative' }}>
       <BlobDecorativo
@@ -41,11 +45,11 @@ function Videos() {
         className="grid-videos"
         style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${Math.min(videos.length || 1, 4)}, 280px)`,
+          gridTemplateColumns: pocosVideos
+            ? `repeat(${videos.length}, 300px)`
+            : `repeat(${Math.min(videos.length || 1, 4)}, 280px)`,
           justifyContent: 'center',
           gap: '2rem',
-          maxWidth: Math.min(videos.length || 1, 4) * 280 + (Math.min(videos.length || 1, 4) - 1) * 32,
-          margin: '0 auto',
         }}
       >
         {videos.map((v, i) => (

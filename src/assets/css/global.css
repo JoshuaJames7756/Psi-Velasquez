@@ -472,6 +472,14 @@ button {
     overflow-x: auto;
     padding-bottom: 0.5rem;
   }
+
+  /* Spotlight de video: en mobile el video va arriba centrado y el
+     texto abajo, en vez de 2 columnas lado a lado. */
+  .video-spotlight-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    gap: 2rem !important;
+  }
 }
 
 /* Evita overflow horizontal general: cualquier elemento (imagen, iframe)
@@ -479,4 +487,12 @@ button {
    scroll horizontal de toda la página. */
 img, iframe, video {
   max-width: 100%;
+}
+
+.video-spotlight-card {
+  transition: transform 0.4s var(--ease-expo), box-shadow 0.4s ease;
+}
+
+.video-spotlight-card:hover {
+  transform: translateY(-8px) scale(1.02);
 }

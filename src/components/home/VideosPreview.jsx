@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useVideos } from '../../hooks/useVideos'
 import VideoCard from '../ui/VideoCard'
 import VideoModal from '../ui/VideoModal'
+import VideoSpotlight from '../ui/VideoSpotlight'
 import FadeInSection from '../ui/FadeInSection'
 
 function VideosPreview() {
@@ -12,21 +13,27 @@ function VideosPreview() {
   // sección vacía — evita mal aspecto antes de que Rebeca suba contenido.
   if (!cargando && videos.length === 0) return null
 
-  // El ancho del contenedor del grid se ajusta a la cantidad real de
-  // videos (hasta un máximo de 4 tarjetas de 280px + espaciado), así una
-  // sola tarjeta no se estira a ocupar todo el ancho disponible ni queda
-  // perdida en una pantalla ancha — el espacio se siente intencional.
-  const anchoGrid = Math.min(videos.length, 4) * 280 + (Math.min(videos.length, 4) - 1) * 32
+  // Con pocos videos (1-2), un grid centrado se ve perdido en una pantalla
+  // ancha sin importar el tamaño de card. En ese caso se usa un layout
+  // "spotlight": video(s) grande(s) + texto al lado, con presencia real.
+  // Con 3 o más, el grid normal ya se ve lleno y con buena proporción.
+  const usarSpotlight = videos.length <= 2
 
   return (
-    <section className="seccion contenedor">
-      <FadeInSection as="div" style={{ textAlign: 'center', marginBottom: 'var(--space-md)' }}>
-        <h2>Contenido para acompañarte</h2>
-        <p>Tips y reflexiones sobre salud mental en video</p>
-      </FadeInSection>
+    <section className="seccion contenedor" style={{ position: 'relative', overflow: 'hidden' }}>
+      {!usarSpotlight && (
+        <FadeInSection as="div" style={{ textAlign: 'center', marginBottom: 'var(--space-md)' }}>
+          <h2>Contenido para acompañarte</h2>
+          <p>Tips y reflexiones sobre salud mental en video</p>
+        </FadeInSection>
+      )}
 
       {cargando ? (
         <p style={{ textAlign: 'center' }}>Cargando videos…</p>
+      ) : usarSpotlight ? (
+        <FadeInSection as="div">
+          <VideoSpotlight videos={videos} onPlay={setVideoActivo} />
+        </FadeInSection>
       ) : (
         <>
           <div
@@ -36,8 +43,6 @@ function VideosPreview() {
               gridTemplateColumns: `repeat(${Math.min(videos.length, 4)}, 280px)`,
               justifyContent: 'center',
               gap: '2rem',
-              maxWidth: anchoGrid,
-              margin: '0 auto',
             }}
           >
             {videos.map((v, i) => (
@@ -47,10 +52,7 @@ function VideosPreview() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <a
-              href="/videos"
-              className="btn btn-outline"
-            >
+            <a href="/videos" className="btn btn-outline">
               Ver más en Instagram
             </a>
           </div>
