@@ -42,7 +42,7 @@ function Footer({ colorAnterior = 'var(--color-fondo-crema)' }) {
           </p>
           <p style={{ display: 'flex', gap: '0.6rem', marginBottom: '0.8rem', fontSize: '0.95rem' }}>
             <Icono nombre="whatsapp" size={18} style={{ flexShrink: 0, marginTop: 2, color: '#C9C6C1' }} />
-            <a href={`tel:+591${contacto.celular}`} style={{ color: '#C9C6C1' }}>
+            <a href={contacto.whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#C9C6C1' }}>
               {contacto.celular}
             </a>
           </p>
@@ -80,7 +80,8 @@ function Footer({ colorAnterior = 'var(--color-fondo-crema)' }) {
         <div
           className="contenedor"
           style={{
-            padding: '1.5rem var(--space-md)',
+            paddingTop: '1.5rem',
+            paddingBottom: '1.5rem',
             fontSize: 'var(--fs-small)',
             color: '#8A8783',
             display: 'flex',

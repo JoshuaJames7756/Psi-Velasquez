@@ -58,7 +58,7 @@ function VistaDetalle({ especialidad }) {
           opacity={0.5}
           style={{ width: 400, height: 400, top: '-140px', right: '-140px', zIndex: 0 }}
         />
-        <div className="contenedor" style={{ maxWidth: 720, position: 'relative', zIndex: 1, padding: '2.5rem var(--space-md) 3.5rem' }}>
+        <div className="contenedor" style={{ maxWidth: 720, position: 'relative', zIndex: 1, paddingTop: '2.5rem', paddingBottom: '3.5rem' }}>
           <Link to="/especialidades" style={{ fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
             ← Todas las especialidades
           </Link>

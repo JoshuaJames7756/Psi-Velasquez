@@ -454,8 +454,12 @@ button {
     font-size: 1.2rem;
   }
 
+  /* !important es necesario aquí: varios componentes ponen padding
+     inline sobre .contenedor (ej. paddingTop:0 para ajustar espaciado
+     tras un DivisorCurva), y sin esto el padding lateral responsive
+     queda pisado, pegando el contenido a los bordes en mobile. */
   .contenedor {
-    padding: 0 1.25rem;
+    padding: 0 1.25rem !important;
   }
 
   /* Toggle navegación móvil */

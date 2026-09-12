@@ -168,7 +168,7 @@ export const contacto = {
   ciudad: "Cochabamba, Bolivia",
   modalidad: "Atención presencial en Cochabamba - Bolivia · Atención online",
   celular: "60389762",
-  whatsappUrl: "https://wa.me/59160389762", // PENDIENTE confirmar formato con cliente
+  whatsappUrl: `https://wa.me/59160389762?text=${encodeURIComponent('Hola Rebeca, me gustaría agendar una consulta.')}`,
   instagramUrl: "https://www.instagram.com/psi.rebecavelasquez/",
   tiktokUrl: "https://www.tiktok.com/@psi.rebecavelasquez",
   linkedinUrl: "https://www.linkedin.com/in/rebeca-velasquez-/",
